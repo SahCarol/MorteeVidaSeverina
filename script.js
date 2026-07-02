@@ -47,7 +47,7 @@
   var btnConversar = document.getElementById('btnConversar');
   var btnReiniciar = document.getElementById('btnReiniciar');
 
-  // ========== ETAPAS COM ÍNDICES CORRESPONDENTES ==========
+  // ========== ETAPAS ==========
   var etapas = [
     { id: 0, nome: 'Sertão', icone: '🌾' },
     { id: 1, nome: 'Canavial', icone: '🌿' },
@@ -59,22 +59,21 @@
     { id: 7, nome: 'Recife', icone: '🏙️' }
   ];
 
-  // TABELA DE EFEITOS POR ETAPA (índice 0-7)
-  var efeitos = [
-    { seguir: 0, descansar: 0, conversar: 0 },     // 0: Sertão
-    { seguir: -1, descansar: -1, conversar: -1 }, // 1: Canavial
-    { seguir: 0, descansar: 1, conversar: 1 },    // 2: Engenho
-    { seguir: -1, descansar: -1, conversar: 0 },  // 3: Feira
-    { seguir: 1, descansar: 1, conversar: 1 },    // 4: Igreja
-    { seguir: 0, descansar: -1, conversar: -1 },  // 5: Cemitério
-    { seguir: -1, descansar: 1, conversar: 1 },   // 6: Rio
-    { seguir: 0, descansar: 0, conversar: 0 }     // 7: Recife
-  ];
+  // ========== EFEITOS ==========
+  var efeitos = {
+    0: { seguir: 0, descansar: 0, conversar: 0 },
+    1: { seguir: -1, descansar: -1, conversar: -1 },
+    2: { seguir: 0, descansar: 1, conversar: 1 },
+    3: { seguir: -1, descansar: -1, conversar: 0 },
+    4: { seguir: 1, descansar: 1, conversar: 1 },
+    5: { seguir: 0, descansar: -1, conversar: -1 },
+    6: { seguir: -1, descansar: 1, conversar: 1 },
+    7: { seguir: 0, descansar: 0, conversar: 0 }
+  };
 
-  // ========== MENSAGENS POR ETAPA (índice 0-7) ==========
-  var mensagens = [
-    // ETAPA 0: SERTÃO
-    {
+  // ========== MENSAGENS ==========
+  var mensagens = {
+    0: {
       seguir: {
         citacao: '"— O meu nome é Severino,<br>como não tenho outro de pia.<br>Porque muito não se nomeia<br>por onde a vida se fia.<br>Não sei se a vida é pouco,<br>ou se é muito a morte, Severino,<br>mas sei que a vida é uma estrada<br>que se anda sem saber onde."',
         descricao: 'Severino inicia sua caminhada pelo sertão. O sol escaldante castiga sua pele, mas a esperança o move.',
@@ -91,8 +90,7 @@
         sentimento: '🤔 Severino sente uma mistura de esperança e apreensão.'
       }
     },
-    // ETAPA 1: CANAVIAL
-    {
+    1: {
       seguir: {
         citacao: '"— O canavial é um mar de folhas verdes,<br>onde a vida se corta e se esquece.<br>E a morte, Severino,<br>é a faca que corta o canavial.<br>Corta-se a cana, corta-se a vida,<br>e o melaço que escorre<br>é o suor dos que morreram<br>sem saber que estavam vivos."',
         descricao: 'Severino atravessa o canavial. O vento traz o cheiro de melaço e o som das folhas cortadas.',
@@ -109,8 +107,7 @@
         sentimento: '🧐 Severino reflete sobre a dureza do trabalho e da existência.'
       }
     },
-    // ETAPA 2: ENGENHO
-    {
+    2: {
       seguir: {
         citacao: '"— As moendas rangem, Severino,<br>o caldo escorre das bagaceiras.<br>A vida é um engenho que mói,<br>e a morte é o bagaço que sobra.<br>Mói-se o homem como a cana,<br>e o açúcar que sobra é a esperança<br>que não adoça a boca de ninguém,<br>mas que mantém a vida em pé."',
         descricao: 'Severino chega ao engenho. A máquina mastiga a cana sem descanso, a vida e a morte se misturam na bagaceira.',
@@ -127,8 +124,7 @@
         sentimento: '💪 As palavras do velho lhe dão coragem para continuar.'
       }
     },
-    // ETAPA 3: FEIRA
-    {
+    3: {
       seguir: {
         citacao: '"— A feira é a cara da vida, Severino.<br>Frutas, peixes, gritos, cores.<br>A miséria e a fartura lado a lado,<br>como a morte e a vida no mesmo chão.<br>Tudo se vende, tudo se compra,<br>até a alma se troca por um prato,<br>e a esperança é a moeda mais rara,<br>que não se encontra em nenhuma barraca."',
         descricao: 'Na feira, Severino vê a vida pulsar: frutas, peixes, gritos. A miséria e a fartura lado a lado.',
@@ -145,8 +141,7 @@
         sentimento: '🤔 Severino pensa sobre o valor das coisas e da própria existência.'
       }
     },
-    // ETAPA 4: IGREJA
-    {
+    4: {
       seguir: {
         citacao: '"— A igreja é a casa da esperança,<br>Severino. O silêncio é a prece,<br>a luz das velas é a fé,<br>e o santo é a mão que estende.<br>Na igreja, a morte é menos certa,<br>e a vida é mais possível,<br>porque a esperança, Severino,<br>é o que nos faz continuar."',
         descricao: 'Severino entra na igreja. O silêncio ecoa, a luz das velas ilumina o altar. Ele olha para o santo e pede forças.',
@@ -163,8 +158,7 @@
         sentimento: '🕊️ As palavras do padre lhe dão esperança e força.'
       }
     },
-    // ETAPA 5: CEMITÉRIO
-    {
+    5: {
       seguir: {
         citacao: '"— O cemitério é a cidade dos que partiram,<br>Severino. Cruzes tortas, nomes apagados.<br>A morte Severina é a moradora<br>que não pede licença para entrar.<br>Ela entra sem bater, sem avisar,<br>e leva os nomes, leva as vidas,<br>deixa apenas as cruzes tortas<br>e as lembranças que o vento leva."',
         descricao: 'Severino passa pelo cemitério. Cruzes tortas, nomes apagados pelo tempo. A morte Severina o observa de cada lápide.',
@@ -181,8 +175,7 @@
         sentimento: '😔 Severino sente a urgência de viver plenamente cada instante.'
       }
     },
-    // ETAPA 6: RIO
-    {
+    6: {
       seguir: {
         citacao: '"— O rio é a estrada líquida, Severino.<br>As águas barrentas refletem o céu,<br>e a travessia é a vida que passa,<br>levando e trazendo os que ousam.<br>O rio não pergunta quem é,<br>não pede nome, não pede nada,<br>apenas leva, apenas traz,<br>como a vida leva e traz a morte."',
         descricao: 'Severino chega ao rio Capibaribe. As águas barrentas refletem o céu nublado. A travessia é perigosa, mas ele não hesita.',
@@ -199,8 +192,7 @@
         sentimento: '🎣 Severino sente-se parte do ciclo da vida.'
       }
     },
-    // ETAPA 7: RECIFE
-    {
+    7: {
       seguir: {
         citacao: '"— Eis que chego ao Recife.<br>A cidade de pedra e sal, Severino.<br>A vida Severina venceu a morte,<br>e a esperança é o porto de chegada.<br>O Recife é o fim da estrada,<br>mas é também o começo de tudo,<br>porque a vida, Severino,<br>é uma estrada que nunca termina."',
         descricao: 'Severino finalmente chega ao Recife. A cidade de pedra e sal se abre diante de seus olhos. A vida Severina venceu a morte!',
@@ -217,18 +209,28 @@
         sentimento: '🤝 Severino sente-se acolhido e pronto para recomeçar.'
       }
     }
-  ];
+  };
 
-  // ========== FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO ==========
+  // ========== FUNÇÃO PARA OBTER DADOS DA ETAPA ATUAL ==========
+  function getDadosEtapa() {
+    var etapa = estado.etapa;
+    return {
+      etapa: etapas[etapa],
+      mensagens: mensagens[etapa],
+      efeitos: efeitos[etapa]
+    };
+  }
+
+  // ========== ATUALIZAR UI ==========
   function atualizarUI() {
     // Atualiza vida
     vidaSpan.textContent = estado.vida;
     
     // ========== ATUALIZA LOCALIZAÇÃO ==========
-    var etapaAtual = etapas[estado.etapa];
-    if (etapaAtual) {
-      iconeLocal.textContent = etapaAtual.icone;
-      nomeLocal.textContent = etapaAtual.nome.toUpperCase();
+    var dados = getDadosEtapa();
+    if (dados.etapa) {
+      iconeLocal.textContent = dados.etapa.icone;
+      nomeLocal.textContent = dados.etapa.nome.toUpperCase();
       destaqueLocal.textContent = (estado.etapa + 1) + '/8';
     }
 
@@ -289,14 +291,25 @@
     if (estado.mensagemAtual) {
       mensagemDiv.innerHTML = estado.mensagemAtual;
     } else {
-      mensagemDiv.innerHTML = 
-        '<div class="citacao">Severino segue sua caminhada...</div>' +
-        '<div class="descricao">A jornada continua, cada passo é uma descoberta.</div>';
+      // Mensagem padrão da etapa
+      var dadosAtuais = getDadosEtapa();
+      if (dadosAtuais.mensagens && dadosAtuais.mensagens.seguir) {
+        var msg = dadosAtuais.mensagens.seguir;
+        mensagemDiv.innerHTML = 
+          '<div class="citacao">' + msg.citacao + '</div>' +
+          '<div class="descricao">' + msg.descricao + '</div>' +
+          '<div class="sentimento">' + msg.sentimento + '</div>';
+      } else {
+        mensagemDiv.innerHTML = 
+          '<div class="citacao">Severino segue sua caminhada...</div>' +
+          '<div class="descricao">A jornada continua, cada passo é uma descoberta.</div>';
+      }
     }
   }
 
   function addHistorico(texto) {
-    var icone = etapas[estado.etapa]?.icone || '📍';
+    var dados = getDadosEtapa();
+    var icone = dados.etapa?.icone || '📍';
     estado.historico.push(icone + ' ' + texto.substring(0, 30) + '...');
     if (estado.historico.length > 12) estado.historico.shift();
   }
@@ -341,8 +354,11 @@
       return;
     }
 
-    // Pega os dados da mensagem da etapa atual
-    var dados = mensagens[etapaAtual]?.[tipo];
+    // Pega os dados da etapa atual
+    var dadosEtapa = getDadosEtapa();
+    
+    // Pega os dados da mensagem para a ação
+    var dados = dadosEtapa.mensagens?.[tipo];
     if (!dados) {
       dados = {
         citacao: 'Severino segue em frente.',
@@ -351,8 +367,8 @@
       };
     }
 
-    // Pega o efeito da etapa atual
-    var efeito = efeitos[etapaAtual]?.[tipo] || 0;
+    // Pega o efeito
+    var efeito = dadosEtapa.efeitos?.[tipo] || 0;
     var novaEtapa = etapaAtual;
 
     // ========== LÓGICA PRINCIPAL ==========
@@ -411,10 +427,7 @@
     estado.jogoAtivo = true;
     estado.acaoRealizada = false;
     estado.historico = ['🌱 recomeço'];
-    estado.mensagemAtual = 
-      '<div class="citacao">"— O meu nome é Severino,<br>como não tenho outro de pia.<br>Porque muito não se nomeia<br>por onde a vida se fia.<br>Não sei se a vida é pouco,<br>ou se é muito a morte, Severino,<br>mas sei que a vida é uma estrada<br>que se anda sem saber onde."</div>' +
-      '<div class="descricao">E começa a caminhada pelo sertão. O sol é grande, a esperança é maior. Severino parte em busca de uma vida melhor.</div>' +
-      '<div class="sentimento">🌅 Severino sente a aventura começar.</div>';
+    estado.mensagemAtual = '';
     
     btnSeguir.disabled = false;
     btnDescansar.disabled = false;
