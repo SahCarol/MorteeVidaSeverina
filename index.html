@@ -320,6 +320,16 @@
       border-radius: 20px;
       font-style: normal;
     }
+    .popup-box .motivo-perda {
+      background: #e8d9ca;
+      border-radius: 30px;
+      padding: 14px 18px;
+      margin: 12px 0;
+      border-left: 6px solid #a04030;
+    }
+    .popup-box .motivo-perda strong {
+      color: #7a2e1e;
+    }
     @media (max-width: 550px) {
       .game-container { padding: 16px; }
       .btn { min-width: 100px; font-size: 1rem; padding: 12px 16px; }
@@ -357,6 +367,7 @@
       <button class="btn btn-info" id="btnCreditos">📜 Créditos</button>
       <button class="btn btn-info" id="btnTutorial">📖 Tutorial</button>
       <button class="btn btn-info" id="btnObra">📚 Obra</button>
+      <button class="btn btn-info" id="btnMotivoPerda">💔 Por que perco vidas?</button>
     </div>
     <button class="btn btn-restart" id="btnReiniciar">↺ REINICIAR</button>
   </div>
@@ -417,6 +428,48 @@
   </div>
 </div>
 
+<!-- ========== POPUP MOTIVO PERDA DE VIDAS ========== -->
+<div class="popup-overlay" id="popupMotivoPerda">
+  <div class="popup-box">
+    <h2>💔 Por que perco vidas?</h2>
+    <p>As vidas de Severino representam sua <strong>energia vital</strong> e resistência durante a travessia. Cada ação tem um custo ou benefício, inspirado nas dificuldades e alívios da jornada do retirante.</p>
+    
+    <div class="motivo-perda">
+      <p><strong>🌿 CANAVIAL (Etapa 1)</strong></p>
+      <p>• <strong>Seguir:</strong> Cansaço extremo — perde 1 vida.</p>
+      <p>• <strong>Descansar:</strong> A terra é dura e o sono não vem — perde 1 vida.</p>
+      <p>• <strong>Conversar:</strong> A conversa com o cortador de cana é desgastante — perde 1 vida.</p>
+    </div>
+
+    <div class="motivo-perda">
+      <p><strong>🍊 FEIRA (Etapa 3)</strong></p>
+      <p>• <strong>Seguir:</strong> O excesso de estímulos cansa — perde 1 vida.</p>
+      <p>• <strong>Descansar:</strong> O cheiro e o barulho impedem o descanso — perde 1 vida.</p>
+    </div>
+
+    <div class="motivo-perda">
+      <p><strong>🪦 CEMITÉRIO (Etapa 5)</strong></p>
+      <p>• <strong>Descansar:</strong> O contato com a morte traz pesadelos — perde 1 vida.</p>
+      <p>• <strong>Conversar:</strong> As palavras do coveiro são sombrias — perde 1 vida.</p>
+    </div>
+
+    <div class="motivo-perda">
+      <p><strong>🌊 RIO (Etapa 6)</strong></p>
+      <p>• <strong>Seguir:</strong> A travessia é perigosa — perde 1 vida.</p>
+    </div>
+
+    <div class="motivo-perda" style="background: #d4c0ad; border-left-color: #2f6b4a;">
+      <p><strong>💚 GANHAR VIDAS:</strong></p>
+      <p>• <strong>Igreja (Etapa 4):</strong> Seguir e descansar trazem fé e recuperação (+1 vida).</p>
+      <p>• <strong>Engenho (Etapa 2):</strong> Descansar perto das máquinas traz um sono reparador (+1 vida).</p>
+      <p>• <strong>Rio (Etapa 6):</strong> Descansar à beira do rio acalma (+1 vida).</p>
+      <p>• <strong>Conversar</strong> em locais como Igreja e Engenho também pode trazer sabedoria e vida.</p>
+    </div>
+    <p style="font-size: 0.95rem; margin-top: 8px;">Cada escolha reflete a dureza da vida sertaneja, onde até o descanso pode ser um desafio.</p>
+    <button class="popup-close" data-close="popupMotivoPerda">Fechar</button>
+  </div>
+</div>
+
 <script>
   (function() {
     // ---------- ESTADO ----------
@@ -443,6 +496,7 @@
     const popupCreditos = document.getElementById('popupCreditos');
     const popupTutorial = document.getElementById('popupTutorial');
     const popupObra = document.getElementById('popupObra');
+    const popupMotivoPerda = document.getElementById('popupMotivoPerda');
 
     // ---------- NOMES ETAPAS ----------
     const nomesEtapa = [
@@ -464,34 +518,34 @@
         conversar: '— “Sabe onde fica o Recife?” — pergunta a um passante. O homem aponta o horizonte e diz: “Lá, Severino, onde a vida é mais severina.”'
       },
       1: {
-        seguir: '“O canavial é um mar de folhas verdes.” Severino atravessa. O vento traz o cheiro de melaço. “A vida é um canavial que se corta.”',
-        descansar: 'Deita-se entre os canaviais. “A terra é dura, e o cansaço é maior.” Perde 1 vida de cansaço.',
-        conversar: 'Encontra um cortador de cana. — “A vida aqui é dura, Severino. Corta-se cana, corta-se a vida.” — Ele concorda com a cabeça.'
+        seguir: '“O canavial é um mar de folhas verdes.” Severino atravessa. O vento traz o cheiro de melaço. “A vida é um canavial que se corta.” — <strong>Perde 1 vida de cansaço.</strong>',
+        descansar: 'Deita-se entre os canaviais. “A terra é dura, e o cansaço é maior.” — <strong>Perde 1 vida de cansaço.</strong>',
+        conversar: 'Encontra um cortador de cana. — “A vida aqui é dura, Severino. Corta-se cana, corta-se a vida.” — Ele concorda com a cabeça. <strong>Perde 1 vida.</strong>'
       },
       2: {
         seguir: 'Chega ao engenho. “As moendas rangem, o caldo escorre.” Morte e vida se misturam na bagaceira. “O engenho é a boca que mastiga.”',
-        descansar: 'Dorme perto do engenho. O barulho das máquinas invade os sonhos. Recupera 1 vida. “O sono é um rio que corre.”',
-        conversar: 'Um velho contador de causos lhe diz: — “O Recife é terra de sal e de espinho. Mas Severino, a vida é um engenho que moe.”'
+        descansar: 'Dorme perto do engenho. O barulho das máquinas invade os sonhos. <strong>Recupera 1 vida.</strong> “O sono é um rio que corre.”',
+        conversar: 'Um velho contador de causos lhe diz: — “O Recife é terra de sal e de espinho. Mas Severino, a vida é um engenho que moe.” <strong>Recupera 1 vida.</strong>'
       },
       3: {
-        seguir: 'Na feira, Severino vê a vida pulsar. “Frutas, peixes, gritos.” A miséria e a fartura lado a lado. “A feira é a cara da vida.”',
-        descansar: 'Senta num banco de praça. O cheiro de peixe e de suor. Perde 1 vida de cansaço. “O descanso é um alívio que pesa.”',
+        seguir: 'Na feira, Severino vê a vida pulsar. “Frutas, peixes, gritos.” A miséria e a fartura lado a lado. “A feira é a cara da vida.” — <strong>Perde 1 vida de cansaço.</strong>',
+        descansar: 'Senta num banco de praça. O cheiro de peixe e de suor. <strong>Perde 1 vida de cansaço.</strong> “O descanso é um alívio que pesa.”',
         conversar: 'Fala com uma baiana: — “Severino, a vida é como a feira: tudo se vende, tudo se compra. Até a alma se troca.”'
       },
       4: {
-        seguir: 'Entra na igreja. O silêncio ecoa. “Severino olha para o santo e pede forças.” Ganha 1 vida. “A igreja é a casa da esperança.”',
-        descansar: 'Deita nos bancos da igreja. O sono vem leve. Recupera 1 vida. “O descanso é uma oração.”',
-        conversar: 'O padre lhe diz: — “A morte é certa, Severino, mas a vida é uma dádiva. A fé move montanhas.”'
+        seguir: 'Entra na igreja. O silêncio ecoa. “Severino olha para o santo e pede forças.” <strong>Ganha 1 vida.</strong> “A igreja é a casa da esperança.”',
+        descansar: 'Deita nos bancos da igreja. O sono vem leve. <strong>Recupera 1 vida.</strong> “O descanso é uma oração.”',
+        conversar: 'O padre lhe diz: — “A morte é certa, Severino, mas a vida é uma dádiva. A fé move montanhas.” <strong>Recupera 1 vida.</strong>'
       },
       5: {
         seguir: 'Passa pelo cemitério. “Cruzes tortas, nomes apagados.” A morte Severina o observa. “O cemitério é a cidade dos que partiram.”',
-        descansar: 'Deita sobre a grama do cemitério. Sonha com os mortos. Perde 1 vida. “O descanso eterno é um sonho sem fim.”',
-        conversar: 'Um coveiro murmura: — “Todos vêm parar aqui, Severino. Mas você ainda tem chão. A vida é uma cova que se cava.”'
+        descansar: 'Deita sobre a grama do cemitério. Sonha com os mortos. <strong>Perde 1 vida.</strong> “O descanso eterno é um sonho sem fim.”',
+        conversar: 'Um coveiro murmura: — “Todos vêm parar aqui, Severino. Mas você ainda tem chão. A vida é uma cova que se cava.” <strong>Perde 1 vida.</strong>'
       },
       6: {
-        seguir: 'Chega ao rio Capibaribe. “As águas barrentas refletem o céu.” A travessia é perigosa. Perde 1 vida. “O rio é a estrada líquida.”',
-        descansar: 'Descansa à beira do rio. O vai-e-vem das águas acalma. Recupera 1 vida. “O rio é um espelho que passa.”',
-        conversar: 'Um pescador diz: — “O rio leva a vida, Severino, mas também traz o sustento. A vida é uma rede que se lança.”'
+        seguir: 'Chega ao rio Capibaribe. “As águas barrentas refletem o céu.” A travessia é perigosa. <strong>Perde 1 vida.</strong> “O rio é a estrada líquida.”',
+        descansar: 'Descansa à beira do rio. O vai-e-vem das águas acalma. <strong>Recupera 1 vida.</strong> “O rio é um espelho que passa.”',
+        conversar: 'Um pescador diz: — “O rio leva a vida, Severino, mas também traz o sustento. A vida é uma rede que se lança.” <strong>Recupera 1 vida.</strong>'
       },
       7: {
         seguir: '“— Eis que chego ao Recife. A cidade de pedra e sal.” Severino chega ao fim da jornada. “A vida Severina venceu.” 🎉',
@@ -632,6 +686,7 @@
     document.getElementById('btnCreditos').addEventListener('click', () => openPopup('popupCreditos'));
     document.getElementById('btnTutorial').addEventListener('click', () => openPopup('popupTutorial'));
     document.getElementById('btnObra').addEventListener('click', () => openPopup('popupObra'));
+    document.getElementById('btnMotivoPerda').addEventListener('click', () => openPopup('popupMotivoPerda'));
 
     // Fechar popups (botão close)
     document.querySelectorAll('.popup-close').forEach(btn => {
