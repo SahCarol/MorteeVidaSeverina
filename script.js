@@ -221,6 +221,18 @@
     };
   }
 
+  // ========== FUNÇÃO PARA EXIBIR MENSAGEM DA ETAPA ==========
+  function exibirMensagemEtapa() {
+    var dados = getDadosEtapa();
+    if (dados.mensagens && dados.mensagens.seguir) {
+      var msg = dados.mensagens.seguir;
+      mensagemDiv.innerHTML = 
+        '<div class="citacao">' + msg.citacao + '</div>' +
+        '<div class="descricao">' + msg.descricao + '</div>' +
+        '<div class="sentimento">' + msg.sentimento + '</div>';
+    }
+  }
+
   // ========== ATUALIZAR UI ==========
   function atualizarUI() {
     // Atualiza vida
@@ -287,23 +299,11 @@
       btnConversar.classList.remove('btn-realizado');
     }
 
-    // Mensagem
+    // ========== EXIBE A MENSAGEM CORRETA DA ETAPA ==========
     if (estado.mensagemAtual) {
       mensagemDiv.innerHTML = estado.mensagemAtual;
     } else {
-      // Mensagem padrão da etapa
-      var dadosAtuais = getDadosEtapa();
-      if (dadosAtuais.mensagens && dadosAtuais.mensagens.seguir) {
-        var msg = dadosAtuais.mensagens.seguir;
-        mensagemDiv.innerHTML = 
-          '<div class="citacao">' + msg.citacao + '</div>' +
-          '<div class="descricao">' + msg.descricao + '</div>' +
-          '<div class="sentimento">' + msg.sentimento + '</div>';
-      } else {
-        mensagemDiv.innerHTML = 
-          '<div class="citacao">Severino segue sua caminhada...</div>' +
-          '<div class="descricao">A jornada continua, cada passo é uma descoberta.</div>';
-      }
+      exibirMensagemEtapa();
     }
   }
 
@@ -369,56 +369,76 @@
 
     // Pega o efeito
     var efeito = dadosEtapa.efeitos?.[tipo] || 0;
-    var novaEtapa = etapaAtual;
 
     // ========== LÓGICA PRINCIPAL ==========
     if (tipo === 'seguir') {
       // SEGUIR: avança para a próxima etapa
-      if (etapaAtual < 7) {
-        novaEtapa = etapaAtual + 1;
+      var novaEtapa = etapaAtual + 1;
+      if (novaEtapa <= 7) {
+        // RESETA o flag de ação realizada
+        estado.acaoRealizada = false;
+        // Atualiza a etapa
+        estado.etapa = novaEtapa;
+        addHistorico('Seguir: ' + (etapas[novaEtapa]?.nome || 'próxima etapa'));
+        
+        // Aplica o efeito (pode perder ou ganhar vida ao seguir)
+        estado.vida = Math.min(10, Math.max(0, estado.vida + efeito));
+        
+        // Verifica se morreu
+        if (estado.vida <= 0) {
+          estado.jogoAtivo = false;
+          estado.mensagemAtual = 
+            '<div class="citacao">"A morte Severina chegou primeiro."</div>' +
+            '<div class="descricao">Severino tombou na estrada. A vida é uma estrada que se anda, mas ele não chegou ao fim.</div>' +
+            '<div class="sentimento">💀 Severino encontrou a morte Severina.</div>';
+          atualizarUI();
+          return;
+        }
+        
+        // Se chegou ao Recife (etapa 7)
+        if (estado.etapa === 7) {
+          estado.jogoAtivo = false;
+          var dadosVitoria = mensagens[7].seguir;
+          estado.mensagemAtual = montarMensagem(dadosVitoria, 0, 'seguir');
+          atualizarUI();
+          return;
+        }
+        
+        // Mostra a mensagem da nova etapa (usando a mensagem "seguir" da nova etapa)
+        var novaDadosEtapa = getDadosEtapa();
+        var novaMsg = novaDadosEtapa.mensagens?.seguir;
+        if (novaMsg) {
+          estado.mensagemAtual = montarMensagem(novaMsg, 0, 'seguir');
+        } else {
+          estado.mensagemAtual = '';
+        }
+        atualizarUI();
+        return;
       }
-      addHistorico('Seguir: ' + (etapas[novaEtapa]?.nome || 'próxima etapa'));
-      
-      // RESETA o flag de ação realizada AO AVANÇAR
-      estado.acaoRealizada = false;
-      
+      return;
     } else {
       // DESCANSAR ou CONVERSAR: marca que a ação foi realizada
       estado.acaoRealizada = true;
       addHistorico(tipo.charAt(0).toUpperCase() + tipo.slice(1) + ' em ' + (etapas[etapaAtual]?.nome || ''));
-    }
-
-    // Aplica o efeito na vida
-    estado.vida = Math.min(10, Math.max(0, estado.vida + efeito));
-
-    // Verifica se morreu
-    if (estado.vida <= 0) {
-      estado.jogoAtivo = false;
-      estado.mensagemAtual = 
-        '<div class="citacao">"A morte Severina chegou primeiro."</div>' +
-        '<div class="descricao">Severino tombou na estrada. A vida é uma estrada que se anda, mas ele não chegou ao fim.</div>' +
-        '<div class="sentimento">💀 Severino encontrou a morte Severina.</div>';
-      atualizarUI();
-      return;
-    }
-
-    // Se for SEGUIR, atualiza a etapa
-    if (tipo === 'seguir') {
-      estado.etapa = Math.min(7, novaEtapa);
       
-      // Se chegou ao Recife (etapa 7), finaliza com vitória
-      if (estado.etapa === 7) {
+      // Aplica o efeito na vida
+      estado.vida = Math.min(10, Math.max(0, estado.vida + efeito));
+      
+      // Verifica se morreu
+      if (estado.vida <= 0) {
         estado.jogoAtivo = false;
-        var dadosVitoria = mensagens[7].seguir;
-        estado.mensagemAtual = montarMensagem(dadosVitoria, 0, 'seguir');
+        estado.mensagemAtual = 
+          '<div class="citacao">"A morte Severina chegou primeiro."</div>' +
+          '<div class="descricao">Severino tombou na estrada. A vida é uma estrada que se anda, mas ele não chegou ao fim.</div>' +
+          '<div class="sentimento">💀 Severino encontrou a morte Severina.</div>';
         atualizarUI();
         return;
       }
+      
+      // Monta a mensagem da ação realizada
+      estado.mensagemAtual = montarMensagem(dados, efeito, tipo);
+      atualizarUI();
     }
-
-    // Monta a mensagem final
-    estado.mensagemAtual = montarMensagem(dados, efeito, tipo);
-    atualizarUI();
   }
 
   function reiniciarJogo() {
