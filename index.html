@@ -30,7 +30,6 @@
       position: relative;
     }
 
-    /* MENU SUPERIOR */
     .menu {
       display: flex;
       flex-wrap: wrap;
@@ -100,7 +99,6 @@
       font-size: 0.9rem;
     }
 
-    /* CONTEÚDO PRINCIPAL */
     .conteudo {
       display: block;
     }
@@ -321,7 +319,6 @@
       border-left: 3px solid #7a5f48;
     }
 
-    /* PÁGINAS DE INFORMAÇÃO */
     .info-page {
       background: #fcf5ea;
       padding: 30px 24px;
@@ -462,9 +459,6 @@
       <p style="margin-top: 8px; font-size: 0.95rem; background: #e4d3be; padding: 10px 14px; border-radius: 30px;">
         <span style="font-style: italic;">Morte e Vida Severina</span>, de João Cabral de Melo Neto.
       </p>
-      <p style="font-size: 0.9rem; color: #4f3d2e;">
-        <strong>O CSS e JavaScript estão embutidos na própria página HTML</strong>, dentro das tags &lt;style&gt; e &lt;script&gt;. Isso facilita o carregamento e a portabilidade do jogo.
-      </p>
       <p style="margin-top: 12px; font-size: 0.9rem; color: #5a4a3a;">
         Este jogo foi desenvolvido como projeto para a disciplina de Literatura Brasileira, com o objetivo de tornar a obra de João Cabral de Melo Neto mais acessível e interativa.
       </p>
@@ -477,10 +471,16 @@
       <h2>Tutorial</h2>
       <p><strong>🎯 Objetivo:</strong> Guiar Severino do sertão até o Recife, sobrevivendo aos desafios da travessia.</p>
       
-      <h3>❤️ Vida</h3>
-      <p>Você começa com 5 vidas. Decisões podem aumentar ou diminuir esse valor. Se chegar a 0, a morte Severina vence.</p>
+      <h3>❤️ Sistema de Vida</h3>
+      <p>Severino começa a jornada com <strong>5 pontos de vida</strong>. Cada escolha que você faz pode:</p>
+      <ul>
+        <li><strong>Diminuir a vida</strong> - quando a ação é desgastante ou perigosa</li>
+        <li><strong>Aumentar a vida</strong> - quando a ação traz alívio ou esperança</li>
+        <li><strong>Não alterar a vida</strong> - quando a ação é neutra</li>
+      </ul>
+      <p>Se a vida chegar a <strong>0 (zero)</strong>, Severino não resiste à travessia e a "morte Severina" vence. Por isso, é preciso equilibrar as ações para chegar ao Recife com vida!</p>
       
-      <h3>🎮 Ações</h3>
+      <h3>🎮 Ações Disponíveis</h3>
       <ul>
         <li><strong>SEGUIR:</strong> Avança para a próxima etapa da jornada. Pode custar ou render vida, dependendo do local.</li>
         <li><strong>DESCANSAR:</strong> Recupera forças, mas em alguns lugares o cansaço é maior. Efeitos variam.</li>
@@ -574,16 +574,13 @@
 
     botoesMenu.forEach(function(botao) {
       botao.addEventListener('click', function() {
-        // Remove active de todos
         botoesMenu.forEach(function(b) { b.classList.remove('active'); });
         this.classList.add('active');
 
-        // Esconde todas as páginas
         for (var key in paginas) {
           paginas[key].classList.add('hidden');
         }
 
-        // Mostra a página selecionada
         var pagina = this.getAttribute('data-pagina');
         if (paginas[pagina]) {
           paginas[pagina].classList.remove('hidden');
