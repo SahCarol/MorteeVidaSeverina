@@ -1,0 +1,412 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #1e1a17;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, system-ui, sans-serif;
+  padding: 16px;
+}
+.game-wrapper {
+  max-width: 860px;
+  width: 100%;
+  background: #d9c8b2;
+  background-image: radial-gradient(circle at 20% 30%, #ede0d0 0%, #c9b69e 100%);
+  border-radius: 48px 48px 32px 32px;
+  padding: 24px 24px 32px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 0 2px #b0977a inset;
+  position: relative;
+}
+
+/* MENU */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 3px double #7f6852;
+}
+.menu-btn {
+  background: #3b2d22;
+  border: none;
+  border-bottom: 4px solid #1c130d;
+  color: #f2e3d0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 10px 20px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.08s linear;
+  box-shadow: 0 3px 0 #2b1d14;
+  font-family: 'Segoe UI', sans-serif;
+  letter-spacing: 1px;
+  flex: 0 1 auto;
+  min-width: 90px;
+}
+.menu-btn:hover {
+  background: #4f3d2e;
+  transform: translateY(-2px);
+}
+.menu-btn:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+  box-shadow: 0 1px 0 #1c130d;
+}
+.menu-btn.active {
+  background: #2f5a4a;
+  border-bottom-color: #1b352b;
+  box-shadow: 0 3px 0 #1b352b;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #2d241e;
+  text-shadow: 2px 2px 0 #b8a187;
+  text-align: center;
+  margin-top: -4px;
+  margin-bottom: 4px;
+  font-family: Georgia, serif;
+  border-bottom: 3px double #7f6852;
+  padding-bottom: 8px;
+}
+.sub {
+  text-align: center;
+  font-style: italic;
+  color: #3f3129;
+  background: #b8a18760;
+  border-radius: 40px;
+  padding: 6px 14px;
+  width: fit-content;
+  margin: 0 auto 18px auto;
+  backdrop-filter: blur(2px);
+  font-weight: 500;
+  border: 1px solid #a1856b;
+  font-size: 0.9rem;
+}
+
+.conteudo {
+  display: block;
+}
+.conteudo.hidden {
+  display: none;
+}
+
+/* JOGO */
+.severino-box {
+  background: #2f241e;
+  padding: 18px 12px 12px 12px;
+  border-radius: 60px 60px 30px 30px;
+  box-shadow: inset 0 4px 8px #0f0b09, 0 8px 0 #1a130f;
+  margin-bottom: 28px;
+  border-bottom: 4px solid #6b5643;
+}
+.status-area {
+  background: #ece1d3;
+  border-radius: 40px;
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 8px;
+  border: 2px solid #ad927b;
+  box-shadow: inset 0 2px 6px #4f3d2e;
+  color: #2b1e17;
+}
+.vida {
+  background: #2f4d3b;
+  padding: 6px 20px;
+  border-radius: 40px;
+  color: #e6f0e0;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: inset 0 -3px 0 #152014;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.vida span {
+  font-size: 1.6rem;
+  line-height: 1;
+  margin-right: 4px;
+}
+.localizacao {
+  background: #5b4637;
+  padding: 6px 24px;
+  border-radius: 40px;
+  color: #f2e3d0;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  box-shadow: inset 0 -3px 0 #2f1f15;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #8a705a;
+  min-width: 200px;
+  justify-content: center;
+}
+.localizacao .icone {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+.localizacao .nome {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.localizacao .destaque {
+  color: #f5e6d0;
+  background: #3d2c1f;
+  padding: 2px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.mensagem {
+  background: #fcf5ea;
+  padding: 22px 18px;
+  border-radius: 30px;
+  margin: 20px 0 24px 0;
+  border-left: 8px solid #8f6f54;
+  border-right: 8px solid #8f6f54;
+  box-shadow: 0 4px 0 #6a5543;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #201811;
+  font-weight: 500;
+  text-align: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-style: italic;
+  background-image: linear-gradient(145deg, #f3e7d8, #e4d3be);
+  flex-direction: column;
+  gap: 10px;
+}
+.mensagem .citacao {
+  font-style: italic;
+  color: #3f2a1a;
+  background: #e8d9c8;
+  padding: 10px 20px;
+  border-radius: 24px;
+  width: 100%;
+  border-left: 4px solid #7f6852;
+  font-size: 1.1rem;
+}
+.mensagem .descricao {
+  font-style: normal;
+  color: #2b1e17;
+  padding: 4px 0;
+}
+.mensagem .sentimento {
+  font-style: normal;
+  font-weight: 600;
+  color: #2f4d3b;
+  background: #d4e0d0;
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  display: inline-block;
+}
+.mensagem .efeito-vida {
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  display: inline-block;
+}
+.mensagem .perdeu {
+  background: #d4a0a0;
+  color: #5a1a1a;
+}
+.mensagem .ganhou {
+  background: #a0d4a0;
+  color: #1a5a1a;
+}
+.mensagem .acao-realizada {
+  background: #dac6b0;
+  color: #3d2c1f;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.botoes-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 18px;
+  margin: 10px 0 18px 0;
+}
+.btn {
+  background: #3b2d22;
+  border: none;
+  border-bottom: 6px solid #1c130d;
+  color: #f2e3d0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 14px 30px;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: 0.08s linear;
+  box-shadow: 0 4px 0 #2b1d14;
+  flex: 1 0 auto;
+  min-width: 130px;
+  letter-spacing: 2px;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn:active:not(:disabled) {
+  transform: translateY(4px);
+  border-bottom-width: 2px;
+  box-shadow: 0 1px 0 #1c130d;
+}
+.btn:disabled {
+  opacity: 0.4;
+  transform: translateY(4px);
+  border-bottom-width: 2px;
+  box-shadow: 0 1px 0 #1c130d;
+  pointer-events: none;
+  filter: grayscale(0.6);
+  cursor: not-allowed;
+}
+.btn-realizado {
+  background: #4f3d2e;
+  border-bottom-color: #2d1d14;
+  opacity: 0.7;
+}
+.btn-restart {
+  background: #5e3e2b;
+  border-bottom-color: #38261b;
+  min-width: 120px;
+  flex: 0.5;
+}
+.btn-primary {
+  background: #2f5a4a;
+  border-bottom-color: #1b352b;
+}
+
+.historico {
+  margin-top: 18px;
+  background: #d6c3ae80;
+  border-radius: 40px;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: #2b1e17;
+  border: 1px solid #b0977a;
+  backdrop-filter: blur(4px);
+  max-height: 80px;
+  overflow-y: auto;
+  font-style: italic;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+.historico span {
+  background: #f2e3d0;
+  padding: 2px 14px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  color: #2d1d12;
+  border-left: 3px solid #7a5f48;
+}
+
+/* PÁGINAS DE INFORMAÇÃO */
+.info-page {
+  background: #fcf5ea;
+  padding: 30px 24px;
+  border-radius: 30px;
+  margin: 10px 0 20px 0;
+  border-left: 8px solid #8f6f54;
+  border-right: 8px solid #8f6f54;
+  box-shadow: 0 4px 0 #6a5543;
+  min-height: 300px;
+  color: #2b1e17;
+  font-family: Georgia, serif;
+  line-height: 1.8;
+}
+.info-page h2 {
+  font-family: Georgia, serif;
+  color: #2d241e;
+  border-bottom: 3px double #7f6852;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-align: center;
+}
+.info-page h3 {
+  color: #3f2a1a;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+.info-page p {
+  margin-bottom: 14px;
+  font-size: 1.05rem;
+}
+.info-page .poesia {
+  font-style: italic;
+  background: #e8d9c8;
+  padding: 16px 20px;
+  border-radius: 24px;
+  border-left: 6px solid #7f6852;
+  margin: 16px 0;
+  text-align: center;
+}
+.info-page .destaque {
+  font-weight: 700;
+  color: #4f2e1b;
+  background: #dac6b0;
+  padding: 0 10px;
+  border-radius: 20px;
+  font-style: normal;
+}
+.info-page ul {
+  padding-left: 24px;
+  margin-bottom: 14px;
+}
+.info-page ul li {
+  margin-bottom: 6px;
+}
+
+.codigo-destaque {
+  background: #2d241e;
+  color: #e6dccf;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  margin: 8px 0;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+  .game-wrapper { padding: 16px; }
+  .btn { min-width: 100px; font-size: 0.95rem; padding: 12px 16px; }
+  .vida { font-size: 1rem; padding: 4px 14px; }
+  .localizacao { font-size: 1rem; padding: 4px 16px; min-width: 160px; }
+  .localizacao .nome { font-size: 0.85rem; }
+  .localizacao .icone { font-size: 1.4rem; }
+  .menu-btn { font-size: 0.75rem; padding: 8px 14px; min-width: 70px; }
+  .info-page { padding: 20px 16px; }
+}
