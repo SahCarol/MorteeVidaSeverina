@@ -20,7 +20,7 @@
       padding: 16px;
     }
     .game-container {
-      max-width: 800px;
+      max-width: 820px;
       width: 100%;
       background: #d9c8b2;
       background-image: radial-gradient(circle at 20% 30%, #ede0d0 0%, #c9b69e 100%);
@@ -28,6 +28,7 @@
       padding: 24px 24px 32px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 0 2px #b0977a inset;
       transition: all 0.2s;
+      position: relative;
     }
     h1 {
       font-size: 2rem;
@@ -37,7 +38,7 @@
       text-shadow: 2px 2px 0 #b8a187;
       text-align: center;
       margin-top: -8px;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
       font-family: 'Georgia', serif;
       border-bottom: 3px double #7f6852;
       padding-bottom: 8px;
@@ -54,6 +55,7 @@
       backdrop-filter: blur(2px);
       font-weight: 500;
       border: 1px solid #a1856b;
+      font-size: 0.9rem;
     }
     .severino-box {
       background: #2f241e;
@@ -105,17 +107,17 @@
     }
     .mensagem {
       background: #fcf5ea;
-      padding: 18px 18px;
+      padding: 22px 18px;
       border-radius: 30px;
       margin: 20px 0 24px 0;
       border-left: 8px solid #8f6f54;
       border-right: 8px solid #8f6f54;
       box-shadow: 0 4px 0 #6a5543;
-      min-height: 80px;
+      min-height: 100px;
       display: flex;
       align-items: center;
       font-size: 1.1rem;
-      line-height: 1.5;
+      line-height: 1.6;
       color: #201811;
       font-weight: 500;
       text-align: center;
@@ -123,6 +125,9 @@
       font-family: 'Georgia', serif;
       font-style: italic;
       background-image: linear-gradient(145deg, #f3e7d8, #e4d3be);
+      transition: 0.15s;
+      flex-direction: column;
+      gap: 6px;
     }
     .botoes-acoes {
       display: flex;
@@ -175,6 +180,14 @@
       background: #2f5a4a;
       border-bottom-color: #1b352b;
     }
+    .btn-info {
+      background: #6b4f3a;
+      border-bottom-color: #3d2c1f;
+      min-width: 100px;
+      flex: 0.3;
+      font-size: 0.9rem;
+      padding: 10px 16px;
+    }
     .footer {
       display: flex;
       justify-content: space-between;
@@ -182,6 +195,11 @@
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 12px;
+    }
+    .footer-left {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .badge {
       background: #292018;
@@ -198,14 +216,121 @@
       border-radius: 20px;
       color: #efdecb;
     }
+    .historico {
+      margin-top: 18px;
+      background: #d6c3ae80;
+      border-radius: 40px;
+      padding: 12px 18px;
+      font-size: 0.85rem;
+      color: #2b1e17;
+      border: 1px solid #b0977a;
+      backdrop-filter: blur(4px);
+      max-height: 80px;
+      overflow-y: auto;
+      font-style: italic;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+    }
+    .historico span {
+      background: #f2e3d0;
+      padding: 2px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      color: #2d1d12;
+      border-left: 3px solid #7a5f48;
+    }
+
+    /* POPUP */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .popup-overlay.active {
+      display: flex;
+    }
+    .popup-box {
+      background: #f5ede4;
+      max-width: 560px;
+      width: 100%;
+      border-radius: 48px 48px 32px 32px;
+      padding: 32px 28px 28px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 2px #b0977a inset;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 2px solid #7f6852;
+    }
+    .popup-box h2 {
+      font-family: 'Georgia', serif;
+      color: #2d241e;
+      border-bottom: 3px double #7f6852;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+    .popup-box p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #2b1e17;
+      margin-bottom: 16px;
+    }
+    .popup-box .poesia {
+      font-style: italic;
+      background: #dccfc0;
+      padding: 12px 16px;
+      border-radius: 24px;
+      border-left: 6px solid #7f6852;
+      margin: 12px 0 18px;
+    }
+    .popup-close {
+      background: #3b2d22;
+      border: none;
+      border-bottom: 5px solid #1c130d;
+      color: #f2e3d0;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 12px 30px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.08s;
+      box-shadow: 0 4px 0 #2b1d14;
+      display: block;
+      margin: 16px auto 0;
+      width: fit-content;
+    }
+    .popup-close:active {
+      transform: translateY(4px);
+      border-bottom-width: 2px;
+      box-shadow: 0 1px 0 #1c130d;
+    }
+    .popup-box .destaque {
+      font-weight: 700;
+      color: #4f2e1b;
+      background: #dac6b0;
+      padding: 0 10px;
+      border-radius: 20px;
+      font-style: normal;
+    }
     @media (max-width: 550px) {
       .game-container { padding: 16px; }
       .btn { min-width: 100px; font-size: 1rem; padding: 12px 16px; }
       .vida { font-size: 1rem; padding: 4px 14px; }
+      .btn-info { min-width: 70px; font-size: 0.8rem; padding: 8px 12px; }
+      .popup-box { padding: 24px 18px; }
     }
   </style>
 </head>
 <body>
+
 <div class="game-container">
   <h1>⚰️ MORTE & VIDA SEVERINA</h1>
   <div class="sub">— João Cabral de Melo Neto —</div>
@@ -213,7 +338,7 @@
   <div class="severino-box">
     <div class="status-area">
       <div class="vida"><span>❤️</span> <span id="vidaDisplay">5</span></div>
-      <div class="etapa" id="etapaDisplay">🌾 RECIFE</div>
+      <div class="etapa" id="etapaDisplay">🌾 SERTÃO</div>
     </div>
   </div>
 
@@ -228,34 +353,100 @@
   </div>
 
   <div class="footer">
+    <div class="footer-left">
+      <button class="btn btn-info" id="btnCreditos">📜 Créditos</button>
+      <button class="btn btn-info" id="btnTutorial">📖 Tutorial</button>
+      <button class="btn btn-info" id="btnObra">📚 Obra</button>
+    </div>
     <button class="btn btn-restart" id="btnReiniciar">↺ REINICIAR</button>
-    <span class="badge"><i>severino</i> · retirante</span>
+  </div>
+
+  <div class="historico" id="historicoBox">
+    <span>🌱 começo</span>
+  </div>
+</div>
+
+<!-- ========== POPUP CRÉDITOS ========== -->
+<div class="popup-overlay" id="popupCreditos">
+  <div class="popup-box">
+    <h2>📜 Créditos</h2>
+    <p><strong>Desenvolvido por Sahmara Carolina.</strong></p>
+    <p>Graduanda em Licenciatura em Letras pela <strong>Universidade Federal Rural de Pernambuco</strong>.</p>
+    <p style="margin-top: 8px; font-size: 0.95rem; background: #e4d3be; padding: 10px 14px; border-radius: 30px;">
+      Código em HTML, CSS e JavaScript.<br>
+      <span style="font-style: italic;">Morte e Vida Severina</span>, de João Cabral de Melo Neto.
+    </p>
+    <div class="poesia">
+      “— O meu nome é Severino,<br>
+      como não tenho outro de pia.”
+    </div>
+    <button class="popup-close" data-close="popupCreditos">Fechar</button>
+  </div>
+</div>
+
+<!-- ========== POPUP TUTORIAL ========== -->
+<div class="popup-overlay" id="popupTutorial">
+  <div class="popup-box">
+    <h2>📖 Tutorial</h2>
+    <p><strong>🎯 Objetivo:</strong> Guiar Severino do sertão até o Recife, sobrevivendo aos desafios da travessia.</p>
+    <p><strong>❤️ Vida:</strong> Você começa com 5 vidas. Decisões podem aumentar ou diminuir esse valor. Se chegar a 0, a morte Severina vence.</p>
+    <p><strong>🚶 SEGUIR:</strong> Avança para a próxima etapa da jornada. Pode custar ou render vida, dependendo do local.</p>
+    <p><strong>🛌 DESCANSAR:</strong> Recupera forças, mas em alguns lugares o cansaço é maior. Efeitos variam.</p>
+    <p><strong>🗣️ CONVERSAR:</strong> Troca palavras com os personagens do caminho. Pode trazer alívio ou reflexões.</p>
+    <p><strong>🌾 Etapas:</strong> Sertão → Canavial → Engenho → Feira → Igreja → Cemitério → Rio → Recife.</p>
+    <p style="font-style: italic; margin-top: 12px;">Cada escolha revela um trecho da obra de João Cabral de Melo Neto.</p>
+    <button class="popup-close" data-close="popupTutorial">Fechar</button>
+  </div>
+</div>
+
+<!-- ========== POPUP OBRA ========== -->
+<div class="popup-overlay" id="popupObra">
+  <div class="popup-box">
+    <h2>📚 Morte e Vida Severina</h2>
+    <p><strong>João Cabral de Melo Neto</strong> (1955)</p>
+    <p>O poema dramático narra a jornada de <span class="destaque">Severino</span>, um retirante nordestino que deixa o sertão em busca de uma vida melhor no Recife.</p>
+    <p>Ao longo do caminho, ele encontra a miséria, o trabalho escravo, a fé, a morte e, por fim, a esperança. A obra é um retrato da condição humana no Nordeste brasileiro, com versos secos e precisos que misturam o popular e o erudito.</p>
+    <div class="poesia">
+      “— O meu nome é Severino,<br>
+      como não tenho outro de pia.<br>
+      Porque muito não se nomeia<br>
+      por onde a vida se fia.”
+    </div>
+    <p>Ao final, Severino chega ao Recife e encontra o nascimento de um filho, simbolizando a <strong>vida que renasce</strong> em meio à morte.</p>
+    <button class="popup-close" data-close="popupObra">Fechar</button>
   </div>
 </div>
 
 <script>
   (function() {
-    // ---------- ESTADO DO JOGO ----------
+    // ---------- ESTADO ----------
     const estado = {
       vida: 5,
-      etapa: 0,            // 0: inicio, 1: canavial, 2: engenho, 3: feira, 4: igreja, 5: cemitério, 6: rio, 7: cidade (final)
+      etapa: 0,
       mensagemAtual: '',
+      historico: ['🌱 começo'],
       jogoAtivo: true,
     };
 
-    // ---------- ELEMENTOS DOM ----------
+    // ---------- ELEMENTOS ----------
     const vidaSpan = document.getElementById('vidaDisplay');
     const etapaSpan = document.getElementById('etapaDisplay');
     const mensagemDiv = document.getElementById('mensagemPoema');
+    const historicoDiv = document.getElementById('historicoBox');
 
     const btnSeguir = document.getElementById('btnSeguir');
     const btnDescansar = document.getElementById('btnDescansar');
     const btnConversar = document.getElementById('btnConversar');
     const btnReiniciar = document.getElementById('btnReiniciar');
 
-    // ---------- NOMES DAS ETAPAS ----------
+    // Popups
+    const popupCreditos = document.getElementById('popupCreditos');
+    const popupTutorial = document.getElementById('popupTutorial');
+    const popupObra = document.getElementById('popupObra');
+
+    // ---------- NOMES ETAPAS ----------
     const nomesEtapa = [
-      '🌾 INÍCIO',
+      '🌾 SERTÃO',
       '🌿 CANAVIAL',
       '⚙️ ENGENHO',
       '🍊 FEIRA',
@@ -265,80 +456,74 @@
       '🏙️ RECIFE'
     ];
 
-    // ---------- MENSAGENS (POESIA + NARRATIVA) ----------
+    // ---------- MENSAGENS ----------
     const mensagens = {
       0: {
-        seguir: '“O meu nome é Severino, / como não tenho outro de pia.” — E começa a caminhada pelo sertão.',
-        descansar: 'Severino senta à sombra de uma juazeiro. O sol castiga, mas a alma descansa um pouco.',
-        conversar: '— “Você sabe onde fica o Recife?” — pergunta a um passante. O homem aponta o horizonte.'
+        seguir: '“— O meu nome é Severino, / como não tenho outro de pia.” — E começa a caminhada pelo sertão. “Sei que há quem lhe chame Severino, / que não tem outro de pia.”',
+        descansar: '“O sol é grande, e a sombra é pouca.” Severino senta à sombra de um juazeiro. O cansaço aperta, mas a alma descansa.',
+        conversar: '— “Sabe onde fica o Recife?” — pergunta a um passante. O homem aponta o horizonte e diz: “Lá, Severino, onde a vida é mais severina.”'
       },
       1: {
-        seguir: 'Atravessa o canavial. O vento faz um mar de folhas verdes. Severino sente o cheiro do melaço.',
-        descansar: 'Deita-se entre os canaviais. O cansaço é grande, mas o chão é duro. Perde 1 vida de cansaço.',
-        conversar: 'Encontra um cortador de cana. — “A vida aqui é dura, Severino.” — Ele concorda com a cabeça.'
+        seguir: '“O canavial é um mar de folhas verdes.” Severino atravessa. O vento traz o cheiro de melaço. “A vida é um canavial que se corta.”',
+        descansar: 'Deita-se entre os canaviais. “A terra é dura, e o cansaço é maior.” Perde 1 vida de cansaço.',
+        conversar: 'Encontra um cortador de cana. — “A vida aqui é dura, Severino. Corta-se cana, corta-se a vida.” — Ele concorda com a cabeça.'
       },
       2: {
-        seguir: 'Chega ao engenho. As moendas rangem, o caldo escorre. Morte e vida se misturam na bagaceira.',
-        descansar: 'Dorme perto do engenho. O barulho das máquinas invade os sonhos. Recupera 1 vida.',
-        conversar: 'Um velho contador de causos lhe diz: — “O Recife é terra de sal e de espinho.”'
+        seguir: 'Chega ao engenho. “As moendas rangem, o caldo escorre.” Morte e vida se misturam na bagaceira. “O engenho é a boca que mastiga.”',
+        descansar: 'Dorme perto do engenho. O barulho das máquinas invade os sonhos. Recupera 1 vida. “O sono é um rio que corre.”',
+        conversar: 'Um velho contador de causos lhe diz: — “O Recife é terra de sal e de espinho. Mas Severino, a vida é um engenho que moe.”'
       },
       3: {
-        seguir: 'Na feira, Severino vê a vida pulsar. Frutas, peixes, gritos. A miséria e a fartura lado a lado.',
-        descansar: 'Senta num banco de praça. O cheiro de peixe e de suor. Perde 1 vida de cansaço.',
-        conversar: 'Fala com uma baiana: — “Severino, a vida é como a feira: tudo se vende, tudo se compra.”'
+        seguir: 'Na feira, Severino vê a vida pulsar. “Frutas, peixes, gritos.” A miséria e a fartura lado a lado. “A feira é a cara da vida.”',
+        descansar: 'Senta num banco de praça. O cheiro de peixe e de suor. Perde 1 vida de cansaço. “O descanso é um alívio que pesa.”',
+        conversar: 'Fala com uma baiana: — “Severino, a vida é como a feira: tudo se vende, tudo se compra. Até a alma se troca.”'
       },
       4: {
-        seguir: 'Entra na igreja. O silêncio ecoa. Severino olha para o santo e pede forças. Ganha 1 vida.',
-        descansar: 'Deita nos bancos da igreja. O sono vem leve. Recupera 1 vida.',
-        conversar: 'O padre lhe diz: — “A morte é certa, Severino, mas a vida é uma dádiva.”'
+        seguir: 'Entra na igreja. O silêncio ecoa. “Severino olha para o santo e pede forças.” Ganha 1 vida. “A igreja é a casa da esperança.”',
+        descansar: 'Deita nos bancos da igreja. O sono vem leve. Recupera 1 vida. “O descanso é uma oração.”',
+        conversar: 'O padre lhe diz: — “A morte é certa, Severino, mas a vida é uma dádiva. A fé move montanhas.”'
       },
       5: {
-        seguir: 'Passa pelo cemitério. Cruzes tortas, nomes apagados. A morte Severina o observa.',
-        descansar: 'Deita sobre a grama do cemitério. Sonha com os mortos. Perde 1 vida.',
-        conversar: 'Um coveiro murmura: — “Todos vêm parar aqui, Severino. Mas você ainda tem chão.”'
+        seguir: 'Passa pelo cemitério. “Cruzes tortas, nomes apagados.” A morte Severina o observa. “O cemitério é a cidade dos que partiram.”',
+        descansar: 'Deita sobre a grama do cemitério. Sonha com os mortos. Perde 1 vida. “O descanso eterno é um sonho sem fim.”',
+        conversar: 'Um coveiro murmura: — “Todos vêm parar aqui, Severino. Mas você ainda tem chão. A vida é uma cova que se cava.”'
       },
       6: {
-        seguir: 'Chega ao rio Capibaribe. As águas barrentas refletem o céu. A travessia é perigosa. Perde 1 vida.',
-        descansar: 'Descansa à beira do rio. O vai-e-vem das águas acalma. Recupera 1 vida.',
-        conversar: 'Um pescador diz: — “O rio leva a vida, mas também traz o sustento, Severino.”'
+        seguir: 'Chega ao rio Capibaribe. “As águas barrentas refletem o céu.” A travessia é perigosa. Perde 1 vida. “O rio é a estrada líquida.”',
+        descansar: 'Descansa à beira do rio. O vai-e-vem das águas acalma. Recupera 1 vida. “O rio é um espelho que passa.”',
+        conversar: 'Um pescador diz: — “O rio leva a vida, Severino, mas também traz o sustento. A vida é uma rede que se lança.”'
       },
       7: {
-        seguir: '— “Eis que chego ao Recife. A cidade de pedra e sal. A vida Severina encontra seu fim e seu começo.” — VOCÊ VENCEU!',
-        descansar: 'Severino se senta num cais. Observa os navios. A jornada chega ao fim. VITÓRIA!',
-        conversar: 'Uma mulher lhe oferece pão. — “Bem-vindo, Severino. A vida continua.” — VOCÊ VENCEU!'
+        seguir: '“— Eis que chego ao Recife. A cidade de pedra e sal.” Severino chega ao fim da jornada. “A vida Severina venceu.” 🎉',
+        descansar: '“Severino se senta num cais. Observa os navios.” A jornada chega ao fim. VITÓRIA! “O descanso é a chegada.”',
+        conversar: 'Uma mulher lhe oferece pão: — “Bem-vindo, Severino. A vida continua.” — VITÓRIA! “A conversa é a ponte.”'
       }
     };
 
-    // ---------- FUNÇÃO ATUALIZAR UI ----------
+    // ---------- ATUALIZAR UI ----------
     function atualizarUI() {
-      // Atualiza vida
       vidaSpan.textContent = estado.vida;
+      etapaSpan.textContent = nomesEtapa[estado.etapa] || '🌵 SERTÃO';
 
-      // Etapa
-      const etapaNome = nomesEtapa[estado.etapa] || '🌵 SERTÃO';
-      etapaSpan.textContent = etapaNome;
+      const ultimos = estado.historico.slice(-6);
+      historicoDiv.innerHTML = ultimos.map(t => `<span>${t}</span>`).join('');
 
-      // Se jogo inativo (vida <=0) mostra mensagem de derrota
       if (!estado.jogoAtivo) {
         if (estado.vida <= 0) {
-          mensagemDiv.innerHTML = '💀 “— A morte Severina chegou primeiro.” <br> Severino tombou na estrada. REINICIE.';
+          mensagemDiv.innerHTML = '💀 “— A morte Severina chegou primeiro.” <br> Severino tombou na estrada. “E a vida é uma estrada que se anda.”';
         } else {
-          // caso vitória (etapa 7 e ativo false)
-          mensagemDiv.innerHTML = '🎉 “— A vida Severina venceu.” <br> Severino chega ao Recife. FIM DA JORNADA.';
+          mensagemDiv.innerHTML = '🎉 “— A vida Severina venceu.” <br> Severino chega ao Recife. “A vida é uma chegada.”';
         }
-        // desabilita botões (exceto reiniciar)
         btnSeguir.disabled = true;
         btnDescansar.disabled = true;
         btnConversar.disabled = true;
         return;
       }
 
-      // Jogo ativo: habilita botões
       btnSeguir.disabled = false;
       btnDescansar.disabled = false;
       btnConversar.disabled = false;
 
-      // Se etapa for 7 (vitória) mostramos mensagem especial e desabilitamos
       if (estado.etapa === 7) {
         mensagemDiv.innerHTML = '🎉 “— A vida Severina venceu.” <br> Severino chega ao Recife. FIM DA JORNADA.';
         btnSeguir.disabled = true;
@@ -348,22 +533,24 @@
         return;
       }
 
-      // Caso contrário, mostra mensagem atual (armazenada) ou mensagem padrão
       if (estado.mensagemAtual) {
         mensagemDiv.innerHTML = estado.mensagemAtual;
       } else {
-        // fallback
         mensagemDiv.innerHTML = 'Severino segue sua caminhada...';
       }
     }
 
-    // ---------- AÇÕES (SEGUIR, DESCANSAR, CONVERSAR) ----------
+    // ---------- HISTÓRICO ----------
+    function addHistorico(texto) {
+      const emoji = texto.match(/[🌾🌿⚙️🍊⛪🪦🌊🏙️]/)?.[0] || '📍';
+      estado.historico.push(`${emoji} ${texto.substring(0, 20)}...`);
+      if (estado.historico.length > 12) estado.historico.shift();
+    }
+
+    // ---------- AÇÃO ----------
     function executarAcao(tipo) {
-      if (!estado.jogoAtivo) {
-        return;
-      }
-      if (estado.vida <= 0) {
-        estado.jogoAtivo = false;
+      if (!estado.jogoAtivo || estado.vida <= 0) {
+        if (estado.vida <= 0) estado.jogoAtivo = false;
         atualizarUI();
         return;
       }
@@ -373,63 +560,32 @@
       let novaEtapa = etapaAtual;
       let perdeVida = 0;
       let ganhaVida = 0;
-      let finalJogo = false;
 
-      // Lógica baseada na etapa e ação
       if (tipo === 'seguir') {
-        // Avança para a próxima etapa (se possível)
-        if (etapaAtual < 7) {
-          novaEtapa = etapaAtual + 1;
-        } else {
-          novaEtapa = 7; // mantém
-        }
-        // Pega mensagem de seguir da etapa ATUAL (antes de avançar)
+        if (etapaAtual < 7) novaEtapa = etapaAtual + 1;
         mensagem = mensagens[etapaAtual]?.seguir || 'Severino segue em frente.';
-        // Perde vida em algumas etapas específicas
-        if (etapaAtual === 1 || etapaAtual === 3 || etapaAtual === 6) {
-          perdeVida = 1;
-        }
-        if (etapaAtual === 4) {
-          ganhaVida = 1; // igreja
-        }
-        // Se chegou na etapa 7 (Recife) após avançar
-        if (novaEtapa === 7) {
-          mensagem = '🏙️ “— O Recife é pedra e sal. Severino chega ao fim de sua jornada.” 🎉';
-          finalJogo = true;
-        }
+        if (etapaAtual === 1 || etapaAtual === 3 || etapaAtual === 6) perdeVida = 1;
+        if (etapaAtual === 4) ganhaVida = 1;
+        if (novaEtapa === 7) mensagem = '🏙️ “— Eis que chego ao Recife. A cidade de pedra e sal.” 🎉';
+        addHistorico(`Seguir: ${nomesEtapa[novaEtapa]}`);
       } 
       else if (tipo === 'descansar') {
-        // Descansar: mensagem da etapa atual
         mensagem = mensagens[etapaAtual]?.descansar || 'Severino descansa um pouco.';
-        // Efeitos: pode perder ou ganhar vida
-        if (etapaAtual === 1 || etapaAtual === 3 || etapaAtual === 5) {
-          perdeVida = 1;
-        } else if (etapaAtual === 2 || etapaAtual === 4 || etapaAtual === 6) {
-          ganhaVida = 1;
-        }
-        // Se etapa 7, descansar ganha vida (mas já é final)
-        if (etapaAtual === 7) {
-          ganhaVida = 0;
-          mensagem = 'Severino descansa à beira do cais. A viagem acabou.';
-        }
+        if (etapaAtual === 1 || etapaAtual === 3 || etapaAtual === 5) perdeVida = 1;
+        else if (etapaAtual === 2 || etapaAtual === 4 || etapaAtual === 6) ganhaVida = 1;
+        if (etapaAtual === 7) { ganhaVida = 0; mensagem = 'Severino descansa à beira do cais.'; }
+        addHistorico(`Descansar em ${nomesEtapa[etapaAtual]}`);
       } 
       else if (tipo === 'conversar') {
-        mensagem = mensagens[etapaAtual]?.conversar || 'Severino troca palavras com alguém.';
-        // Conversar pode curar ou ferir dependendo da etapa
-        if (etapaAtual === 1 || etapaAtual === 5) {
-          perdeVida = 1;
-        } else if (etapaAtual === 2 || etapaAtual === 4 || etapaAtual === 6) {
-          ganhaVida = 1;
-        }
-        if (etapaAtual === 7) {
-          mensagem = '— “Bem-vindo ao Recife, Severino. A vida continua.” — FIM.';
-        }
+        mensagem = mensagens[etapaAtual]?.conversar || 'Severino troca palavras.';
+        if (etapaAtual === 1 || etapaAtual === 5) perdeVida = 1;
+        else if (etapaAtual === 2 || etapaAtual === 4 || etapaAtual === 6) ganhaVida = 1;
+        if (etapaAtual === 7) mensagem = '— “Bem-vindo ao Recife, Severino. A vida continua.” — FIM.';
+        addHistorico(`Conversar em ${nomesEtapa[etapaAtual]}`);
       }
 
-      // Aplica efeitos de vida (com limites)
       estado.vida = Math.min(10, Math.max(0, estado.vida + ganhaVida - perdeVida));
 
-      // Se vida <=0, jogo acaba
       if (estado.vida <= 0) {
         estado.jogoAtivo = false;
         estado.mensagemAtual = '💀 “— A morte Severina chegou primeiro.” <br> Severino tombou na estrada.';
@@ -437,10 +593,8 @@
         return;
       }
 
-      // Atualiza etapa (se seguir, avança; descansar/conversar mantém)
       if (tipo === 'seguir') {
         estado.etapa = Math.min(7, novaEtapa);
-        // Se chegou na etapa 7, finaliza
         if (estado.etapa === 7) {
           estado.jogoAtivo = false;
           estado.mensagemAtual = '🎉 “— A vida Severina venceu.” <br> Severino chega ao Recife. FIM DA JORNADA.';
@@ -449,7 +603,6 @@
         }
       }
 
-      // Armazena mensagem e atualiza
       estado.mensagemAtual = mensagem;
       atualizarUI();
     }
@@ -459,27 +612,51 @@
       estado.vida = 5;
       estado.etapa = 0;
       estado.jogoAtivo = true;
-      estado.mensagemAtual = '“— O meu nome é Severino,<br>como não tenho outro de pia.” — E começa a caminhada pelo sertão.';
+      estado.historico = ['🌱 recomeço'];
+      estado.mensagemAtual = '“— O meu nome é Severino,<br>como não tenho outro de pia.” — E começa a caminhada.';
       atualizarUI();
-      // Habilita botões (atualizarUI já trata)
       btnSeguir.disabled = false;
       btnDescansar.disabled = false;
       btnConversar.disabled = false;
     }
 
-    // ---------- EVENT LISTENERS ----------
-    btnSeguir.addEventListener('click', function() {
-      executarAcao('seguir');
+    // ---------- POPUPS ----------
+    function openPopup(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    function closePopup(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // Eventos dos botões de popup
+    document.getElementById('btnCreditos').addEventListener('click', () => openPopup('popupCreditos'));
+    document.getElementById('btnTutorial').addEventListener('click', () => openPopup('popupTutorial'));
+    document.getElementById('btnObra').addEventListener('click', () => openPopup('popupObra'));
+
+    // Fechar popups (botão close)
+    document.querySelectorAll('.popup-close').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-close');
+        closePopup(targetId);
+      });
     });
-    btnDescansar.addEventListener('click', function() {
-      executarAcao('descansar');
+
+    // Fechar ao clicar fora do box
+    document.querySelectorAll('.popup-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('active');
+        }
+      });
     });
-    btnConversar.addEventListener('click', function() {
-      executarAcao('conversar');
-    });
+
+    // ---------- EVENTOS JOGO ----------
+    btnSeguir.addEventListener('click', () => executarAcao('seguir'));
+    btnDescansar.addEventListener('click', () => executarAcao('descansar'));
+    btnConversar.addEventListener('click', () => executarAcao('conversar'));
     btnReiniciar.addEventListener('click', reiniciarJogo);
 
-    // ---------- INICIALIZAÇÃO ----------
+    // ---------- INICIALIZA ----------
     reiniciarJogo();
   })();
 </script>
