@@ -163,7 +163,6 @@
     .localizacao .icone {
       font-size: 1.8rem;
       line-height: 1;
-      transition: all 0.3s ease;
     }
     .localizacao .nome {
       font-size: 1.1rem;
@@ -478,13 +477,13 @@
         <li><strong>Aumentar a vida</strong> - quando a ação traz alívio ou esperança</li>
         <li><strong>Não alterar a vida</strong> - quando a ação é neutra</li>
       </ul>
-      <p>Se a vida chegar a <strong>0 (zero)</strong>, Severino não resiste à travessia e a "morte Severina" vence. Por isso, é preciso equilibrar as ações para chegar ao Recife com vida!</p>
+      <p>Se a vida chegar a <strong>0 (zero)</strong>, Severino não resiste à travessia e a "morte Severina" vence.</p>
       
       <h3>🎮 Ações Disponíveis</h3>
       <ul>
-        <li><strong>SEGUIR:</strong> Avança para a próxima etapa da jornada. Pode custar ou render vida, dependendo do local.</li>
-        <li><strong>DESCANSAR:</strong> Recupera forças, mas em alguns lugares o cansaço é maior. Efeitos variam.</li>
-        <li><strong>CONVERSAR:</strong> Troca palavras com os personagens do caminho. Pode trazer alívio ou reflexões.</li>
+        <li><strong>SEGUIR:</strong> Avança para a próxima etapa. Pode custar ou render vida.</li>
+        <li><strong>DESCANSAR:</strong> Tenta recuperar forças. Efeitos variam conforme o local.</li>
+        <li><strong>CONVERSAR:</strong> Troca palavras com os personagens do caminho.</li>
       </ul>
       
       <h3>🌾 Etapas da Jornada</h3>
@@ -609,7 +608,6 @@
     var btnConversar = document.getElementById('btnConversar');
     var btnReiniciar = document.getElementById('btnReiniciar');
 
-    // EMOJIS REAIS (não códigos HTML)
     var etapas = [
       { nome: 'Sertão', icone: '🌾' },
       { nome: 'Canavial', icone: '🌿' },
@@ -621,165 +619,153 @@
       { nome: 'Recife', icone: '🏙' }
     ];
 
+    // TABELA DE EFEITOS POR ETAPA E AÇÃO
+    var efeitos = {
+      0: { seguir: 0, descansar: 0, conversar: 0 },
+      1: { seguir: -1, descansar: -1, conversar: -1 },
+      2: { seguir: 0, descansar: 1, conversar: 1 },
+      3: { seguir: -1, descansar: -1, conversar: 0 },
+      4: { seguir: 1, descansar: 1, conversar: 1 },
+      5: { seguir: 0, descansar: -1, conversar: -1 },
+      6: { seguir: -1, descansar: 1, conversar: 1 },
+      7: { seguir: 0, descansar: 0, conversar: 0 }
+    };
+
     var mensagens = {
       0: {
         seguir: {
           citacao: '"O meu nome é Severino, como não tenho outro de pia."',
-          descricao: 'Severino inicia sua caminhada pelo sertão. O sol escaldante castiga sua pele, mas a esperança o move. Ele sente a dureza da terra seca sob seus pés e o vento quente que parece secar a alma.',
-          sentimento: '😔 Severino sente o peso da partida, mas a fé no amanhã o sustenta.',
-          efeito: ''
+          descricao: 'Severino inicia sua caminhada pelo sertão. O sol escaldante castiga sua pele, mas a esperança o move. Ele sente a dureza da terra seca sob seus pés.',
+          sentimento: '😔 Severino sente o peso da partida, mas a fé no amanhã o sustenta.'
         },
         descansar: {
           citacao: '"O sol é grande, e a sombra é pouca."',
-          descricao: 'Severino senta à sombra de um juazeiro. O cansaço aperta, mas a alma descansa um instante. Ele observa o horizonte e pensa no que deixou para trás. A brisa leve traz um momento de paz.',
-          sentimento: '😌 Um breve alívio, mas a saudade já começa a doer no peito.',
-          efeito: ''
+          descricao: 'Severino senta à sombra de um juazeiro. O cansaço aperta, mas a alma descansa um instante. Ele observa o horizonte e pensa no que deixou para trás.',
+          sentimento: '😌 Um breve alívio, mas a saudade já começa a doer no peito.'
         },
         conversar: {
           citacao: '"Sabe onde fica o Recife?" pergunta a um passante.',
-          descricao: 'O homem aponta o horizonte e diz: "Lá, Severino, onde a vida é mais severina." As palavras ecoam em sua mente enquanto ele agradece e segue. A incerteza do caminho o acompanha.',
-          sentimento: '🤔 Severino sente uma mistura de esperança e apreensão.',
-          efeito: ''
+          descricao: 'O homem aponta o horizonte e diz: "Lá, Severino, onde a vida é mais severina." As palavras ecoam em sua mente enquanto ele agradece e segue.',
+          sentimento: '🤔 Severino sente uma mistura de esperança e apreensão.'
         }
       },
       1: {
         seguir: {
           citacao: '"O canavial é um mar de folhas verdes."',
-          descricao: 'Severino atravessa o canavial. O vento traz o cheiro de melaço e o som das folhas cortadas. A vida é um canavial que se corta — e ele sente cada passo como uma luta contra o cansaço que o consome.',
-          sentimento: '😓 Cansado, mas determinado, Severino segue em frente com os olhos fixos no horizonte.',
-          efeito: 'perdeu 1 vida de cansaço'
+          descricao: 'Severino atravessa o canavial. O vento traz o cheiro de melaço e o som das folhas cortadas. A vida é um canavial que se corta — e ele sente cada passo como uma luta contra o cansaço.',
+          sentimento: '😓 Cansado, mas determinado, Severino segue em frente.'
         },
         descansar: {
           citacao: '"A terra é dura, e o cansaço é maior."',
-          descricao: 'Deita-se entre os canaviais. O chão é áspero, o sono não vem fácil. Severino tenta descansar, mas os pensamentos o perseguem. A dureza da terra parece entrar em seus ossos.',
-          sentimento: '😩 O descanso não trouxe alívio, apenas mais consciência da dureza da jornada.',
-          efeito: 'perdeu 1 vida de cansaço'
+          descricao: 'Deita-se entre os canaviais. O chão é áspero, o sono não vem fácil. Severino tenta descansar, mas os pensamentos o perseguem.',
+          sentimento: '😩 O descanso não trouxe alívio, apenas mais consciência da dureza da jornada.'
         },
         conversar: {
           citacao: '"A vida aqui é dura, Severino. Corta-se cana, corta-se a vida."',
-          descricao: 'O cortador de cana fala com sabedoria. Severino escuta, sente o peso das palavras e reflete sobre a própria existência. A conversa o faz perceber que a luta é a mesma para todos.',
-          sentimento: '🧐 Severino reflete sobre a dureza do trabalho e da existência.',
-          efeito: 'perdeu 1 vida'
+          descricao: 'O cortador de cana fala com sabedoria. Severino escuta, sente o peso das palavras e reflete sobre a própria existência.',
+          sentimento: '🧐 Severino reflete sobre a dureza do trabalho e da existência.'
         }
       },
       2: {
         seguir: {
           citacao: '"As moendas rangem, o caldo escorre."',
-          descricao: 'Severino chega ao engenho. A máquina mastiga a cana sem descanso, a vida e a morte se misturam na bagaceira. Ele observa, fascinado e apreensivo, o ciclo que nunca para.',
-          sentimento: '😯 Severino sente o peso da indústria e da exploração humana.',
-          efeito: ''
+          descricao: 'Severino chega ao engenho. A máquina mastiga a cana sem descanso, a vida e a morte se misturam na bagaceira. Ele observa, fascinado e apreensivo.',
+          sentimento: '😯 Severino sente o peso da indústria e da exploração humana.'
         },
         descansar: {
           citacao: '"O sono é um rio que corre."',
-          descricao: 'Dorme perto do engenho. O barulho das máquinas invade os sonhos, mas ele encontra um sono reparador. As engrenagens giram em sua mente, mas o descanso lhe devolve forças.',
-          sentimento: '😴 Severino acorda renovado, apesar do barulho constante ao redor.',
-          efeito: 'recuperou 1 vida'
+          descricao: 'Dorme perto do engenho. O barulho das máquinas invade os sonhos, mas ele encontra um sono reparador. O descanso lhe devolve forças.',
+          sentimento: '😴 Severino acorda renovado, apesar do barulho constante.'
         },
         conversar: {
           citacao: '"O Recife é terra de sal e de espinho. Mas Severino, a vida é um engenho que moe."',
-          descricao: 'O velho contador de causos lhe oferece sabedoria. Severino escuta atentamente, absorvendo cada palavra como um aprendiz que busca entender o mundo.',
-          sentimento: '💪 As palavras do velho lhe dão coragem para continuar a jornada.',
-          efeito: 'recuperou 1 vida'
+          descricao: 'O velho contador de causos lhe oferece sabedoria. Severino escuta atentamente, absorvendo cada palavra como um aprendiz.',
+          sentimento: '💪 As palavras do velho lhe dão coragem para continuar.'
         }
       },
       3: {
         seguir: {
           citacao: '"A feira é a cara da vida."',
-          descricao: 'Na feira, Severino vê a vida pulsar: frutas, peixes, gritos. A miséria e a fartura lado a lado. O excesso de estímulos e a agitação o cansam profundamente.',
-          sentimento: '😵 Severino sente-se sobrecarregado, mas também vivo e parte de algo maior.',
-          efeito: 'perdeu 1 vida de cansaço'
+          descricao: 'Na feira, Severino vê a vida pulsar: frutas, peixes, gritos. A miséria e a fartura lado a lado. O excesso de estímulos o cansa profundamente.',
+          sentimento: '😵 Severino sente-se sobrecarregado, mas também vivo.'
         },
         descansar: {
           citacao: '"O descanso é um alívio que pesa."',
-          descricao: 'Senta num banco de praça. O cheiro de peixe e suor o envolve. Severino tenta descansar, mas a agitação da feira não lhe dá trégua, transformando o descanso em mais um desafio.',
-          sentimento: '😔 Severino percebe que até o descanso pode ser desgastante na jornada.',
-          efeito: 'perdeu 1 vida de cansaço'
+          descricao: 'Senta num banco de praça. O cheiro de peixe e suor o envolve. Severino tenta descansar, mas a agitação da feira não lhe dá trégua.',
+          sentimento: '😔 Severino percebe que até o descanso pode ser desgastante.'
         },
         conversar: {
           citacao: '"Severino, a vida é como a feira: tudo se vende, tudo se compra."',
-          descricao: 'A baiana fala com sabedoria. Severino reflete sobre a troca constante da vida, sobre o valor das coisas e das pessoas. Ele leva consigo uma lição valiosa.',
-          sentimento: '🤔 Severino pensa sobre o valor das coisas e da própria existência.',
-          efeito: ''
+          descricao: 'A baiana fala com sabedoria. Severino reflete sobre a troca constante da vida, sobre o valor das coisas e das pessoas.',
+          sentimento: '🤔 Severino pensa sobre o valor das coisas e da própria existência.'
         }
       },
       4: {
         seguir: {
           citacao: '"A igreja é a casa da esperança."',
           descricao: 'Severino entra na igreja. O silêncio ecoa, a luz das velas ilumina o altar. Ele olha para o santo e pede forças. Uma paz inexplicável invade seu coração.',
-          sentimento: '🙏 Severino sente-se protegido e fortalecido pela oração e pela fé.',
-          efeito: 'recuperou 1 vida'
+          sentimento: '🙏 Severino sente-se protegido e fortalecido pela oração.'
         },
         descansar: {
           citacao: '"O descanso é uma oração."',
-          descricao: 'Deita nos bancos da igreja. O sono vem leve, como uma bênção divina. Severino dorme profundamente, acordando com a alma lavada e o espírito renovado.',
-          sentimento: '😌 Severino sente paz pela primeira vez em toda a jornada.',
-          efeito: 'recuperou 1 vida'
+          descricao: 'Deita nos bancos da igreja. O sono vem leve, como uma bênção divina. Severino dorme profundamente, acordando com a alma lavada.',
+          sentimento: '😌 Severino sente paz pela primeira vez em toda a jornada.'
         },
         conversar: {
           citacao: '"A morte é certa, Severino, mas a vida é uma dádiva."',
           descricao: 'O padre lhe oferece consolo e orientação. Severino ouve atentamente, encontrando nas palavras do religioso um conforto que há muito não sentia.',
-          sentimento: '🕊️ As palavras do padre lhe dão esperança e força para continuar.',
-          efeito: 'recuperou 1 vida'
+          sentimento: '🕊️ As palavras do padre lhe dão esperança e força.'
         }
       },
       5: {
         seguir: {
           citacao: '"O cemitério é a cidade dos que partiram."',
-          descricao: 'Severino passa pelo cemitério. Cruzes tortas, nomes apagados pelo tempo. A morte Severina o observa de cada lápide, mas ele segue firme, refletindo sobre a finitude.',
-          sentimento: '😶 Severino reflete sobre a finitude, mas não se abala diante dela.',
-          efeito: ''
+          descricao: 'Severino passa pelo cemitério. Cruzes tortas, nomes apagados pelo tempo. A morte Severina o observa de cada lápide, mas ele segue firme.',
+          sentimento: '😶 Severino reflete sobre a finitude, mas não se abala.'
         },
         descansar: {
           citacao: '"O descanso eterno é um sonho sem fim."',
-          descricao: 'Deita sobre a grama do cemitério. Sonha com os mortos, com a vida que passou. O contato com a morte lhe traz uma nova perspectiva sobre a própria vida.',
-          sentimento: '😰 Severino sente o peso da morte, mas também a beleza da vida.',
-          efeito: 'perdeu 1 vida'
+          descricao: 'Deita sobre a grama do cemitério. Sonha com os mortos, com a vida que passou. O contato com a morte lhe traz uma nova perspectiva.',
+          sentimento: '😰 Severino sente o peso da morte, mas também a beleza da vida.'
         },
         conversar: {
           citacao: '"Todos vêm parar aqui, Severino. Mas você ainda tem chão."',
-          descricao: 'O coveiro murmura palavras sombrias. Severino escuta, compreendendo que a vida é uma cova que se cava todos os dias. A conversa o faz valorizar cada momento.',
-          sentimento: '😔 Severino sente a urgência de viver plenamente cada instante.',
-          efeito: 'perdeu 1 vida'
+          descricao: 'O coveiro murmura palavras sombrias. Severino escuta, compreendendo que a vida é uma cova que se cava todos os dias.',
+          sentimento: '😔 Severino sente a urgência de viver plenamente cada instante.'
         }
       },
       6: {
         seguir: {
           citacao: '"O rio é a estrada líquida."',
-          descricao: 'Severino chega ao rio Capibaribe. As águas barrentas refletem o céu nublado. A travessia é perigosa, a correnteza forte, mas ele não hesita e mergulha na aventura.',
-          sentimento: '😅 Severino sente o alívio de ter atravessado, mas o cansaço é grande.',
-          efeito: 'perdeu 1 vida'
+          descricao: 'Severino chega ao rio Capibaribe. As águas barrentas refletem o céu nublado. A travessia é perigosa, a correnteza forte, mas ele não hesita.',
+          sentimento: '😅 Severino sente o alívio de ter atravessado, mas o cansaço é grande.'
         },
         descansar: {
           citacao: '"O rio é um espelho que passa."',
-          descricao: 'Descansa à beira do rio. O vai-e-vem das águas acalma sua alma, como se o próprio rio lhe contasse histórias de outros viajantes. Severino se sente parte da paisagem.',
-          sentimento: '🌊 Severino sente a fluidez da vida e se aquieta diante dela.',
-          efeito: 'recuperou 1 vida'
+          descricao: 'Descansa à beira do rio. O vai-e-vem das águas acalma sua alma, como se o próprio rio lhe contasse histórias de outros viajantes.',
+          sentimento: '🌊 Severino sente a fluidez da vida e se aquieta.'
         },
         conversar: {
           citacao: '"O rio leva a vida, Severino, mas também traz o sustento."',
-          descricao: 'O pescador compartilha sua sabedoria. Severino ouve atentamente, entendendo que a vida é uma rede que se lança ao desconhecido, confiando na correnteza.',
-          sentimento: '🎣 Severino sente-se parte do ciclo da vida e da natureza.',
-          efeito: 'recuperou 1 vida'
+          descricao: 'O pescador compartilha sua sabedoria. Severino ouve atentamente, entendendo que a vida é uma rede que se lança ao desconhecido.',
+          sentimento: '🎣 Severino sente-se parte do ciclo da vida.'
         }
       },
       7: {
         seguir: {
           citacao: '"Eis que chego ao Recife. A cidade de pedra e sal."',
           descricao: 'Severino finalmente chega ao Recife. A cidade de pedra e sal se abre diante de seus olhos. Ele olha para o mar e sente que toda a caminhada valeu a pena. A vida Severina venceu!',
-          sentimento: '🎉 Severino celebra a chegada e a esperança renovada!',
-          efeito: 'VITÓRIA!'
+          sentimento: '🎉 Severino celebra a chegada e a esperança renovada!'
         },
         descansar: {
           citacao: '"O descanso é a chegada."',
           descricao: 'Severino se senta num cais. Observa os navios, a vida que chega e parte. A jornada chegou ao fim, e ele finalmente pode descansar com a consciência tranquila.',
-          sentimento: '😌 Severino sente a paz de ter completado sua travessia.',
-          efeito: 'VITÓRIA!'
+          sentimento: '😌 Severino sente a paz de ter completado sua travessia.'
         },
         conversar: {
           citacao: '"Bem-vindo, Severino. A vida continua."',
           descricao: 'Uma mulher lhe oferece pão. Severino sorri, sentindo-se acolhido. A conversa é a ponte para o novo começo, e ele sabe que a vida continua além do horizonte.',
-          sentimento: '🤝 Severino sente-se acolhido e pronto para recomeçar.',
-          efeito: 'VITÓRIA!'
+          sentimento: '🤝 Severino sente-se acolhido e pronto para recomeçar.'
         }
       }
     };
@@ -803,12 +789,12 @@
         if (estado.vida <= 0) {
           mensagemDiv.innerHTML = 
             '<div class="citacao">"A morte Severina chegou primeiro."</div>' +
-            '<div class="descricao">Severino tombou na estrada. A vida é uma estrada que se anda, mas ele não chegou ao fim. A jornada termina aqui.</div>' +
+            '<div class="descricao">Severino tombou na estrada. A vida é uma estrada que se anda, mas ele não chegou ao fim.</div>' +
             '<div class="sentimento">💀 Severino encontrou a morte Severina.</div>';
         } else {
           mensagemDiv.innerHTML = 
             '<div class="citacao">"A vida Severina venceu."</div>' +
-            '<div class="descricao">Severino chega ao Recife. A vida é uma chegada, e ele finalmente encontrou seu destino. A travessia foi longa, mas a vitória é doce.</div>' +
+            '<div class="descricao">Severino chega ao Recife. A vida é uma chegada, e ele finalmente encontrou seu destino.</div>' +
             '<div class="sentimento">🎉 A jornada foi longa, mas a vitória é doce.</div>';
         }
         btnSeguir.disabled = true;
@@ -824,7 +810,7 @@
       if (estado.etapa === 7) {
         mensagemDiv.innerHTML = 
           '<div class="citacao">"A vida Severina venceu."</div>' +
-          '<div class="descricao">Severino chega ao Recife. FIM DA JORNADA. A travessia chegou ao fim com vitória!</div>' +
+          '<div class="descricao">Severino chega ao Recife. FIM DA JORNADA!</div>' +
           '<div class="sentimento">🎉 A travessia chegou ao fim com vitória!</div>';
         btnSeguir.disabled = true;
         btnDescansar.disabled = true;
@@ -848,16 +834,16 @@
       if (estado.historico.length > 12) estado.historico.shift();
     }
 
-    function montarMensagem(dados) {
+    function montarMensagem(dados, efeito) {
       var html = '<div class="citacao">' + dados.citacao + '</div>';
       html += '<div class="descricao">' + dados.descricao + '</div>';
-      if (dados.efeito && dados.efeito.includes('perdeu')) {
-        html += '<div class="efeito-vida perdeu">❌ ' + dados.efeito + '</div>';
-      } else if (dados.efeito && dados.efeito.includes('recuperou')) {
-        html += '<div class="efeito-vida ganhou">✅ ' + dados.efeito + '</div>';
-      } else if (dados.efeito && dados.efeito.includes('VITÓRIA')) {
-        html += '<div class="efeito-vida ganhou" style="background:#f0d060;color:#3d2c1f;">🏆 ' + dados.efeito + '</div>';
+      
+      if (efeito < 0) {
+        html += '<div class="efeito-vida perdeu">❌ Perdeu ' + Math.abs(efeito) + ' vida</div>';
+      } else if (efeito > 0) {
+        html += '<div class="efeito-vida ganhou">✅ Recuperou ' + efeito + ' vida</div>';
       }
+      
       html += '<div class="sentimento">' + dados.sentimento + '</div>';
       return html;
     }
@@ -870,82 +856,67 @@
       }
 
       var etapaAtual = estado.etapa;
+      
+      // Se chegou no Recife, não permite mais ações
+      if (etapaAtual === 7) {
+        return;
+      }
+
       var dados = mensagens[etapaAtual]?.[tipo];
       if (!dados) {
         dados = {
           citacao: 'Severino segue em frente.',
           descricao: 'A jornada continua, cada passo é uma descoberta.',
-          sentimento: '😅 Severino segue confiante.',
-          efeito: ''
+          sentimento: '😅 Severino segue confiante.'
         };
       }
 
-      var perdeVida = 0;
-      var ganhaVida = 0;
+      // Pega o efeito da tabela
+      var efeito = efeitos[etapaAtual]?.[tipo] || 0;
       var novaEtapa = etapaAtual;
-      var mensagemHTML = '';
 
+      // Se for SEGUIR, avança para a próxima etapa
       if (tipo === 'seguir') {
-        if (etapaAtual < 7) novaEtapa = etapaAtual + 1;
-        if (etapaAtual === 1 || etapaAtual === 3 || etapaAtual === 6) perdeVida = 1;
-        if (etapaAtual === 4) ganhaVida = 1;
-        if (novaEtapa === 7) {
-          dados = mensagens[7].seguir;
-          perdeVida = 0;
-          ganhaVida = 0;
+        if (etapaAtual < 7) {
+          novaEtapa = etapaAtual + 1;
         }
         addHistorico('Seguir: ' + (etapas[novaEtapa]?.nome || 'próxima etapa'));
       } else if (tipo === 'descansar') {
-        if (etapaAtual === 1 || etapaAtual === 3 || etapaAtual === 5) perdeVida = 1;
-        else if (etapaAtual === 2 || etapaAtual === 4 || etapaAtual === 6) ganhaVida = 1;
-        if (etapaAtual === 7) { 
-          dados = mensagens[7].descansar;
-          perdeVida = 0;
-          ganhaVida = 0;
-        }
         addHistorico('Descansar em ' + (etapas[etapaAtual]?.nome || ''));
       } else if (tipo === 'conversar') {
-        if (etapaAtual === 1 || etapaAtual === 5) perdeVida = 1;
-        else if (etapaAtual === 2 || etapaAtual === 4 || etapaAtual === 6) ganhaVida = 1;
-        if (etapaAtual === 7) {
-          dados = mensagens[7].conversar;
-          perdeVida = 0;
-          ganhaVida = 0;
-        }
         addHistorico('Conversar em ' + (etapas[etapaAtual]?.nome || ''));
       }
 
-      if (perdeVida > 0) {
-        dados.efeito = 'perdeu ' + perdeVida + ' vida' + (perdeVida > 1 ? 's' : '');
-      } else if (ganhaVida > 0) {
-        dados.efeito = 'recuperou ' + ganhaVida + ' vida' + (ganhaVida > 1 ? 's' : '');
-      }
+      // Aplica o efeito na vida
+      estado.vida = Math.min(10, Math.max(0, estado.vida + efeito));
 
-      estado.vida = Math.min(10, Math.max(0, estado.vida + ganhaVida - perdeVida));
-
+      // Verifica se morreu
       if (estado.vida <= 0) {
         estado.jogoAtivo = false;
         estado.mensagemAtual = 
           '<div class="citacao">"A morte Severina chegou primeiro."</div>' +
-          '<div class="descricao">Severino tombou na estrada. A vida é uma estrada que se anda, mas ele não chegou ao fim. A jornada termina aqui.</div>' +
+          '<div class="descricao">Severino tombou na estrada. A vida é uma estrada que se anda, mas ele não chegou ao fim.</div>' +
           '<div class="sentimento">💀 Severino encontrou a morte Severina.</div>';
         atualizarUI();
         return;
       }
 
+      // Se for SEGUIR, atualiza a etapa
       if (tipo === 'seguir') {
         estado.etapa = Math.min(7, novaEtapa);
+        
+        // Se chegou ao Recife (etapa 7), finaliza com vitória
         if (estado.etapa === 7) {
           estado.jogoAtivo = false;
-          dados = mensagens[7].seguir;
-          dados.efeito = 'VITÓRIA!';
-          estado.mensagemAtual = montarMensagem(dados);
+          var dadosVitoria = mensagens[7].seguir;
+          estado.mensagemAtual = montarMensagem(dadosVitoria, 0);
           atualizarUI();
           return;
         }
       }
 
-      estado.mensagemAtual = montarMensagem(dados);
+      // Monta a mensagem com o efeito
+      estado.mensagemAtual = montarMensagem(dados, efeito);
       atualizarUI();
     }
 
