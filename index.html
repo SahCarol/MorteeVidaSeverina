@@ -19,8 +19,8 @@
       font-family: 'Segoe UI', Tahoma, system-ui, sans-serif;
       padding: 16px;
     }
-    .game-container {
-      max-width: 820px;
+    .game-wrapper {
+      max-width: 860px;
       width: 100%;
       background: #d9c8b2;
       background-image: radial-gradient(circle at 20% 30%, #ede0d0 0%, #c9b69e 100%);
@@ -29,6 +29,49 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 0 2px #b0977a inset;
       position: relative;
     }
+
+    /* MENU SUPERIOR */
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 3px double #7f6852;
+    }
+    .menu-btn {
+      background: #3b2d22;
+      border: none;
+      border-bottom: 4px solid #1c130d;
+      color: #f2e3d0;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 10px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.08s linear;
+      box-shadow: 0 3px 0 #2b1d14;
+      font-family: 'Segoe UI', sans-serif;
+      letter-spacing: 1px;
+      flex: 0 1 auto;
+      min-width: 90px;
+    }
+    .menu-btn:hover {
+      background: #4f3d2e;
+      transform: translateY(-2px);
+    }
+    .menu-btn:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+      box-shadow: 0 1px 0 #1c130d;
+    }
+    .menu-btn.active {
+      background: #2f5a4a;
+      border-bottom-color: #1b352b;
+      box-shadow: 0 3px 0 #1b352b;
+    }
+
     h1 {
       font-size: 2rem;
       font-weight: 600;
@@ -36,7 +79,7 @@
       color: #2d241e;
       text-shadow: 2px 2px 0 #b8a187;
       text-align: center;
-      margin-top: -8px;
+      margin-top: -4px;
       margin-bottom: 4px;
       font-family: Georgia, serif;
       border-bottom: 3px double #7f6852;
@@ -56,6 +99,15 @@
       border: 1px solid #a1856b;
       font-size: 0.9rem;
     }
+
+    /* CONTEÚDO PRINCIPAL */
+    .conteudo {
+      display: block;
+    }
+    .conteudo.hidden {
+      display: none;
+    }
+
     .severino-box {
       background: #2f241e;
       padding: 18px 12px 12px 12px;
@@ -107,20 +159,28 @@
       align-items: center;
       gap: 10px;
       border: 2px solid #8a705a;
+      min-width: 200px;
+      justify-content: center;
     }
     .localizacao .icone {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
+      line-height: 1;
+      transition: all 0.3s ease;
     }
     .localizacao .nome {
       font-size: 1.1rem;
       text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
     .localizacao .destaque {
       color: #f5e6d0;
       background: #3d2c1f;
       padding: 2px 12px;
       border-radius: 20px;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
     .mensagem {
       background: #fcf5ea;
@@ -236,28 +296,6 @@
       background: #2f5a4a;
       border-bottom-color: #1b352b;
     }
-    .btn-info {
-      background: #6b4f3a;
-      border-bottom-color: #3d2c1f;
-      min-width: 100px;
-      flex: 0.3;
-      font-size: 0.85rem;
-      padding: 10px 16px;
-      letter-spacing: 1px;
-    }
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .footer-left {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
     .historico {
       margin-top: 18px;
       background: #d6c3ae80;
@@ -283,80 +321,64 @@
       border-left: 3px solid #7a5f48;
     }
 
-    /* POPUP */
-    .popup-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(6px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+    /* PÁGINAS DE INFORMAÇÃO */
+    .info-page {
+      background: #fcf5ea;
+      padding: 30px 24px;
+      border-radius: 30px;
+      margin: 10px 0 20px 0;
+      border-left: 8px solid #8f6f54;
+      border-right: 8px solid #8f6f54;
+      box-shadow: 0 4px 0 #6a5543;
+      min-height: 300px;
+      color: #2b1e17;
+      font-family: Georgia, serif;
+      line-height: 1.8;
     }
-    .popup-overlay.active {
-      display: flex;
-    }
-    .popup-box {
-      background: #f5ede4;
-      max-width: 560px;
-      width: 100%;
-      border-radius: 48px 48px 32px 32px;
-      padding: 32px 28px 28px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 2px #b0977a inset;
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-      border: 2px solid #7f6852;
-    }
-    .popup-box h2 {
+    .info-page h2 {
       font-family: Georgia, serif;
       color: #2d241e;
       border-bottom: 3px double #7f6852;
       padding-bottom: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       font-size: 1.8rem;
       text-align: center;
     }
-    .popup-box p {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: #2b1e17;
-      margin-bottom: 16px;
+    .info-page h3 {
+      color: #3f2a1a;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-size: 1.2rem;
     }
-    .popup-box .poesia {
+    .info-page p {
+      margin-bottom: 14px;
+      font-size: 1.05rem;
+    }
+    .info-page .poesia {
       font-style: italic;
-      background: #dccfc0;
-      padding: 12px 16px;
+      background: #e8d9c8;
+      padding: 16px 20px;
       border-radius: 24px;
       border-left: 6px solid #7f6852;
-      margin: 12px 0 18px;
+      margin: 16px 0;
+      text-align: center;
     }
-    .popup-close {
-      background: #3b2d22;
-      border: none;
-      border-bottom: 5px solid #1c130d;
-      color: #f2e3d0;
+    .info-page .destaque {
       font-weight: 700;
-      font-size: 1.2rem;
-      padding: 12px 30px;
-      border-radius: 60px;
-      cursor: pointer;
-      transition: 0.08s;
-      box-shadow: 0 4px 0 #2b1d14;
-      display: block;
-      margin: 16px auto 0;
-      width: fit-content;
+      color: #4f2e1b;
+      background: #dac6b0;
+      padding: 0 10px;
+      border-radius: 20px;
+      font-style: normal;
     }
-    .popup-close:active {
-      transform: translateY(4px);
-      border-bottom-width: 2px;
-      box-shadow: 0 1px 0 #1c130d;
+    .info-page ul {
+      padding-left: 24px;
+      margin-bottom: 14px;
     }
+    .info-page ul li {
+      margin-bottom: 6px;
+    }
+
     .codigo-destaque {
       background: #2d241e;
       color: #e6dccf;
@@ -366,115 +388,210 @@
       font-size: 0.9rem;
       margin: 8px 0;
     }
-    @media (max-width: 550px) {
-      .game-container { padding: 16px; }
+
+    @media (max-width: 600px) {
+      .game-wrapper { padding: 16px; }
       .btn { min-width: 100px; font-size: 0.95rem; padding: 12px 16px; }
       .vida { font-size: 1rem; padding: 4px 14px; }
-      .btn-info { min-width: 70px; font-size: 0.75rem; padding: 8px 12px; }
-      .popup-box { padding: 24px 18px; }
-      .localizacao { font-size: 1rem; padding: 4px 16px; }
-      .localizacao .nome { font-size: 0.9rem; }
+      .localizacao { font-size: 1rem; padding: 4px 16px; min-width: 160px; }
+      .localizacao .nome { font-size: 0.85rem; }
+      .localizacao .icone { font-size: 1.4rem; }
+      .menu-btn { font-size: 0.75rem; padding: 8px 14px; min-width: 70px; }
+      .info-page { padding: 20px 16px; }
     }
   </style>
 </head>
 <body>
 
-<div class="game-container">
+<div class="game-wrapper">
+  <!-- MENU -->
+  <div class="menu">
+    <button class="menu-btn active" data-pagina="jogo">Jogo</button>
+    <button class="menu-btn" data-pagina="creditos">Créditos</button>
+    <button class="menu-btn" data-pagina="tutorial">Tutorial</button>
+    <button class="menu-btn" data-pagina="obra">A Obra</button>
+    <button class="menu-btn" data-pagina="autor">Autor</button>
+  </div>
+
   <h1>MORTE &amp; VIDA SEVERINA</h1>
   <div class="sub">João Cabral de Melo Neto</div>
 
-  <div class="severino-box">
-    <div class="status-area">
-      <div class="vida"><span>&#10084;</span> <span id="vidaDisplay">5</span></div>
-      <div class="localizacao" id="etapaDisplay">
-        <span class="icone" id="iconeLocal">&#127806;</span>
-        <span class="nome" id="nomeLocal">Sertão</span>
-        <span class="destaque" id="destaqueLocal">etapa 1/8</span>
+  <!-- PÁGINA: JOGO -->
+  <div class="conteudo" id="pagina-jogo">
+    <div class="severino-box">
+      <div class="status-area">
+        <div class="vida"><span>&#10084;</span> <span id="vidaDisplay">5</span></div>
+        <div class="localizacao" id="etapaDisplay">
+          <span class="icone" id="iconeLocal">&#127806;</span>
+          <span class="nome" id="nomeLocal">SERTÃO</span>
+          <span class="destaque" id="destaqueLocal">1/8</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="mensagem" id="mensagemPoema">
-    <div class="citacao">"O meu nome é Severino, como não tenho outro de pia."</div>
-    <div class="descricao">Severino inicia sua caminhada pelo sertão. O sol escaldante castiga sua pele, mas a esperança o move.</div>
-    <div class="sentimento">&#128532; Severino sente o peso da partida, mas a fé no amanhã o sustenta.</div>
-  </div>
-
-  <div class="botoes-acoes">
-    <button class="btn btn-primary" id="btnSeguir">SEGUIR</button>
-    <button class="btn" id="btnDescansar">DESCANSAR</button>
-    <button class="btn" id="btnConversar">CONVERSAR</button>
-  </div>
-
-  <div class="footer">
-    <div class="footer-left">
-      <button class="btn btn-info" id="btnCreditos">Créditos</button>
-      <button class="btn btn-info" id="btnTutorial">Tutorial</button>
-      <button class="btn btn-info" id="btnObra">A Obra</button>
+    <div class="mensagem" id="mensagemPoema">
+      <div class="citacao">"O meu nome é Severino, como não tenho outro de pia."</div>
+      <div class="descricao">Severino inicia sua caminhada pelo sertão. O sol escaldante castiga sua pele, mas a esperança o move.</div>
+      <div class="sentimento">&#128532; Severino sente o peso da partida, mas a fé no amanhã o sustenta.</div>
     </div>
-    <button class="btn btn-restart" id="btnReiniciar">REINICIAR</button>
-  </div>
 
-  <div class="historico" id="historicoBox">
-    <span>&#127793; começo</span>
-  </div>
-</div>
-
-<!-- POPUP CRÉDITOS -->
-<div class="popup-overlay" id="popupCreditos">
-  <div class="popup-box">
-    <h2>Créditos</h2>
-    <p><strong>Desenvolvido por Sahmara Carolina.</strong></p>
-    <p>Graduanda em Licenciatura em Letras pela <strong>Universidade Federal Rural de Pernambuco</strong>.</p>
-    <div class="codigo-destaque">
-      <strong>Código:</strong> HTML, CSS e JavaScript
+    <div class="botoes-acoes">
+      <button class="btn btn-primary" id="btnSeguir">SEGUIR</button>
+      <button class="btn" id="btnDescansar">DESCANSAR</button>
+      <button class="btn" id="btnConversar">CONVERSAR</button>
     </div>
-    <p style="margin-top: 8px; font-size: 0.95rem; background: #e4d3be; padding: 10px 14px; border-radius: 30px;">
-      <span style="font-style: italic;">Morte e Vida Severina</span>, de João Cabral de Melo Neto.
-    </p>
-    <p style="font-size: 0.9rem; color: #4f3d2e;">
-      <strong>O CSS e JavaScript estão embutidos na própria página HTML</strong>, dentro das tags &lt;style&gt; e &lt;script&gt;. Isso facilita o carregamento e a portabilidade do jogo.
-    </p>
-    <button class="popup-close" data-close="popupCreditos">Fechar</button>
-  </div>
-</div>
 
-<!-- POPUP TUTORIAL -->
-<div class="popup-overlay" id="popupTutorial">
-  <div class="popup-box">
-    <h2>Tutorial</h2>
-    <p><strong>Objetivo:</strong> Guiar Severino do sertão até o Recife, sobrevivendo aos desafios da travessia.</p>
-    <p><strong>&#10084; Vida:</strong> Você começa com 5 vidas. Decisões podem aumentar ou diminuir esse valor. Se chegar a 0, a morte Severina vence.</p>
-    <p><strong>SEGUIR:</strong> Avança para a próxima etapa da jornada. Pode custar ou render vida, dependendo do local.</p>
-    <p><strong>DESCANSAR:</strong> Recupera forças, mas em alguns lugares o cansaço é maior. Efeitos variam.</p>
-    <p><strong>CONVERSAR:</strong> Troca palavras com os personagens do caminho. Pode trazer alívio ou reflexões.</p>
-    <p><strong>Etapas:</strong> Sertão → Canavial → Engenho → Feira → Igreja → Cemitério → Rio → Recife.</p>
-    <p style="font-style: italic; margin-top: 12px;">Cada escolha revela um trecho da obra de João Cabral de Melo Neto.</p>
-    <button class="popup-close" data-close="popupTutorial">Fechar</button>
-  </div>
-</div>
-
-<!-- POPUP OBRA -->
-<div class="popup-overlay" id="popupObra">
-  <div class="popup-box">
-    <h2>Morte e Vida Severina</h2>
-    <p><strong>João Cabral de Melo Neto</strong> (1955)</p>
-    <p>O poema dramático narra a jornada de <strong>Severino</strong>, um retirante nordestino que deixa o sertão em busca de uma vida melhor no Recife.</p>
-    <p>Ao longo do caminho, ele encontra a miséria, o trabalho escravo, a fé, a morte e, por fim, a esperança. A obra é um retrato da condição humana no Nordeste brasileiro, com versos secos e precisos que misturam o popular e o erudito.</p>
-    <div class="poesia">
-      "O meu nome é Severino,<br>
-      como não tenho outro de pia.<br>
-      Porque muito não se nomeia<br>
-      por onde a vida se fia."
+    <div style="display:flex; justify-content:center; margin-top:8px;">
+      <button class="btn btn-restart" id="btnReiniciar">REINICIAR</button>
     </div>
-    <p>Ao final, Severino chega ao Recife e encontra o nascimento de um filho, simbolizando a <strong>vida que renasce</strong> em meio à morte.</p>
-    <button class="popup-close" data-close="popupObra">Fechar</button>
+
+    <div class="historico" id="historicoBox">
+      <span>&#127793; começo</span>
+    </div>
   </div>
+
+  <!-- PÁGINA: CRÉDITOS -->
+  <div class="conteudo hidden" id="pagina-creditos">
+    <div class="info-page">
+      <h2>Créditos</h2>
+      <p><strong>Desenvolvido por Sahmara Carolina.</strong></p>
+      <p>Graduanda em Licenciatura em Letras pela <strong>Universidade Federal Rural de Pernambuco</strong>.</p>
+      <div class="codigo-destaque">
+        <strong>Código:</strong> HTML, CSS e JavaScript
+      </div>
+      <p style="margin-top: 8px; font-size: 0.95rem; background: #e4d3be; padding: 10px 14px; border-radius: 30px;">
+        <span style="font-style: italic;">Morte e Vida Severina</span>, de João Cabral de Melo Neto.
+      </p>
+      <p style="font-size: 0.9rem; color: #4f3d2e;">
+        <strong>O CSS e JavaScript estão embutidos na própria página HTML</strong>, dentro das tags &lt;style&gt; e &lt;script&gt;. Isso facilita o carregamento e a portabilidade do jogo.
+      </p>
+      <p style="margin-top: 12px; font-size: 0.9rem; color: #5a4a3a;">
+        Este jogo foi desenvolvido como projeto para a disciplina de Literatura Brasileira, com o objetivo de tornar a obra de João Cabral de Melo Neto mais acessível e interativa.
+      </p>
+    </div>
+  </div>
+
+  <!-- PÁGINA: TUTORIAL -->
+  <div class="conteudo hidden" id="pagina-tutorial">
+    <div class="info-page">
+      <h2>Tutorial</h2>
+      <p><strong>🎯 Objetivo:</strong> Guiar Severino do sertão até o Recife, sobrevivendo aos desafios da travessia.</p>
+      
+      <h3>❤️ Vida</h3>
+      <p>Você começa com 5 vidas. Decisões podem aumentar ou diminuir esse valor. Se chegar a 0, a morte Severina vence.</p>
+      
+      <h3>🎮 Ações</h3>
+      <ul>
+        <li><strong>SEGUIR:</strong> Avança para a próxima etapa da jornada. Pode custar ou render vida, dependendo do local.</li>
+        <li><strong>DESCANSAR:</strong> Recupera forças, mas em alguns lugares o cansaço é maior. Efeitos variam.</li>
+        <li><strong>CONVERSAR:</strong> Troca palavras com os personagens do caminho. Pode trazer alívio ou reflexões.</li>
+      </ul>
+      
+      <h3>🌾 Etapas da Jornada</h3>
+      <p>Sertão → Canavial → Engenho → Feira → Igreja → Cemitério → Rio → Recife</p>
+      
+      <p style="font-style: italic; margin-top: 12px;">Cada escolha revela um trecho da obra de João Cabral de Melo Neto.</p>
+    </div>
+  </div>
+
+  <!-- PÁGINA: A OBRA -->
+  <div class="conteudo hidden" id="pagina-obra">
+    <div class="info-page">
+      <h2>Morte e Vida Severina</h2>
+      <p><strong>João Cabral de Melo Neto</strong> (1955)</p>
+      
+      <p>O poema dramático narra a jornada de <span class="destaque">Severino</span>, um retirante nordestino que deixa o sertão em busca de uma vida melhor no Recife.</p>
+      
+      <div class="poesia">
+        "O meu nome é Severino,<br>
+        como não tenho outro de pia.<br>
+        Porque muito não se nomeia<br>
+        por onde a vida se fia."
+      </div>
+      
+      <p>Ao longo do caminho, ele encontra a miséria, o trabalho escravo, a fé, a morte e, por fim, a esperança. A obra é um retrato da condição humana no Nordeste brasileiro, com versos secos e precisos que misturam o popular e o erudito.</p>
+      
+      <h3>Principais Temas</h3>
+      <ul>
+        <li><strong>Morte e Vida:</strong> O título já antecipa o dualismo central da obra.</li>
+        <li><strong>Identidade:</strong> Severino representa todos os retirantes nordestinos.</li>
+        <li><strong>Fé e Esperança:</strong> A religiosidade popular como força de resistência.</li>
+        <li><strong>Denúncia Social:</strong> A miséria e a exploração do povo nordestino.</li>
+      </ul>
+      
+      <p>Ao final, Severino chega ao Recife e encontra o nascimento de um filho, simbolizando a <strong>vida que renasce</strong> em meio à morte.</p>
+    </div>
+  </div>
+
+  <!-- PÁGINA: AUTOR -->
+  <div class="conteudo hidden" id="pagina-autor">
+    <div class="info-page">
+      <h2>João Cabral de Melo Neto</h2>
+      
+      <p><strong>Nascimento:</strong> 9 de janeiro de 1920, Recife, Pernambuco</p>
+      <p><strong>Falecimento:</strong> 9 de outubro de 1999, Rio de Janeiro</p>
+      
+      <div class="poesia">
+        "A poesia é uma coisa que se faz com palavras,<br>
+        mas não apenas com palavras."
+      </div>
+      
+      <p>João Cabral de Melo Neto foi um dos maiores poetas brasileiros do século XX. Membro da <strong>Academia Brasileira de Letras</strong>, sua obra é marcada pela <strong>poesia concreta</strong>, pela <strong>linguagem seca e precisa</strong> e pela <strong>crítica social</strong>.</p>
+      
+      <h3>Características da Obra</h3>
+      <ul>
+        <li><strong>Poesia Engajada:</strong> Temas sociais, especialmente a realidade nordestina.</li>
+        <li><strong>Linguagem Precisa:</strong> Versos enxutos, sem adornos desnecessários.</li>
+        <li><strong>Influências:</strong> Modernismo, Barroco e poesia popular.</li>
+        <li><strong>Obras Principais:</strong> <em>Pedra do Sono</em>, <em>O Cão sem Plumas</em>, <em>Morte e Vida Severina</em>.</li>
+      </ul>
+      
+      <h3>Morte e Vida Severina</h3>
+      <p>Escrito em 1955, este é seu poema mais conhecido. Foi adaptado para o cinema, teatro e televisão, tornando-se um marco da literatura brasileira. A obra retrata a jornada do retirante nordestino com uma <strong>poesia seca, musical e profundamente humana</strong>.</p>
+      
+      <div class="poesia">
+        "A vida é uma estrada que se anda,<br>
+        e a morte é o fim de toda a estrada."
+      </div>
+      
+      <p style="margin-top: 12px; font-style: italic;">João Cabral de Melo Neto faleceu em 1999, deixando um legado inestimável para a literatura brasileira.</p>
+    </div>
+  </div>
+
 </div>
 
 <script>
   (function() {
-    // ESTADO DO JOGO
+    // ========== MENU ==========
+    var botoesMenu = document.querySelectorAll('.menu-btn');
+    var paginas = {
+      jogo: document.getElementById('pagina-jogo'),
+      creditos: document.getElementById('pagina-creditos'),
+      tutorial: document.getElementById('pagina-tutorial'),
+      obra: document.getElementById('pagina-obra'),
+      autor: document.getElementById('pagina-autor')
+    };
+
+    botoesMenu.forEach(function(botao) {
+      botao.addEventListener('click', function() {
+        // Remove active de todos
+        botoesMenu.forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+
+        // Esconde todas as páginas
+        for (var key in paginas) {
+          paginas[key].classList.add('hidden');
+        }
+
+        // Mostra a página selecionada
+        var pagina = this.getAttribute('data-pagina');
+        if (paginas[pagina]) {
+          paginas[pagina].classList.remove('hidden');
+        }
+      });
+    });
+
+    // ========== JOGO ==========
     var estado = {
       vida: 5,
       etapa: 0,
@@ -483,7 +600,6 @@
       jogoAtivo: true
     };
 
-    // ELEMENTOS
     var vidaSpan = document.getElementById('vidaDisplay');
     var iconeLocal = document.getElementById('iconeLocal');
     var nomeLocal = document.getElementById('nomeLocal');
@@ -496,12 +612,6 @@
     var btnConversar = document.getElementById('btnConversar');
     var btnReiniciar = document.getElementById('btnReiniciar');
 
-    // POPUPS
-    var popupCreditos = document.getElementById('popupCreditos');
-    var popupTutorial = document.getElementById('popupTutorial');
-    var popupObra = document.getElementById('popupObra');
-
-    // DADOS DAS ETAPAS
     var etapas = [
       { nome: 'Sertão', icone: '&#127806;' },
       { nome: 'Canavial', icone: '&#127807;' },
@@ -513,7 +623,6 @@
       { nome: 'Recife', icone: '&#127961;' }
     ];
 
-    // MENSAGENS DETALHADAS
     var mensagens = {
       0: {
         seguir: {
@@ -680,10 +789,12 @@
     function atualizarUI() {
       vidaSpan.textContent = estado.vida;
       
-      var etapaAtual = etapas[estado.etapa] || etapas[0];
-      iconeLocal.textContent = etapaAtual.icone;
-      nomeLocal.textContent = etapaAtual.nome;
-      destaqueLocal.textContent = 'etapa ' + (estado.etapa + 1) + '/8';
+      var etapaAtual = etapas[estado.etapa];
+      if (etapaAtual) {
+        iconeLocal.textContent = etapaAtual.icone;
+        nomeLocal.textContent = etapaAtual.nome.toUpperCase();
+        destaqueLocal.textContent = (estado.etapa + 1) + '/8';
+      }
 
       var ultimos = estado.historico.slice(-6);
       historicoDiv.innerHTML = ultimos.map(function(t) {
@@ -785,7 +896,7 @@
           perdeVida = 0;
           ganhaVida = 0;
         }
-        addHistorico('Seguir: ' + etapas[novaEtapa]?.nome || 'próxima etapa');
+        addHistorico('Seguir: ' + (etapas[novaEtapa]?.nome || 'próxima etapa'));
       } else if (tipo === 'descansar') {
         if (etapaAtual === 1 || etapaAtual === 3 || etapaAtual === 5) perdeVida = 1;
         else if (etapaAtual === 2 || etapaAtual === 4 || etapaAtual === 6) ganhaVida = 1;
@@ -794,7 +905,7 @@
           perdeVida = 0;
           ganhaVida = 0;
         }
-        addHistorico('Descansar em ' + etapas[etapaAtual]?.nome || '');
+        addHistorico('Descansar em ' + (etapas[etapaAtual]?.nome || ''));
       } else if (tipo === 'conversar') {
         if (etapaAtual === 1 || etapaAtual === 5) perdeVida = 1;
         else if (etapaAtual === 2 || etapaAtual === 4 || etapaAtual === 6) ganhaVida = 1;
@@ -803,10 +914,9 @@
           perdeVida = 0;
           ganhaVida = 0;
         }
-        addHistorico('Conversar em ' + etapas[etapaAtual]?.nome || '');
+        addHistorico('Conversar em ' + (etapas[etapaAtual]?.nome || ''));
       }
 
-      // Aplica efeitos de vida
       if (perdeVida > 0) {
         dados.efeito = 'perdeu ' + perdeVida + ' vida' + (perdeVida > 1 ? 's' : '');
       } else if (ganhaVida > 0) {
@@ -855,33 +965,6 @@
       btnDescansar.disabled = false;
       btnConversar.disabled = false;
     }
-
-    function openPopup(id) {
-      document.getElementById(id).classList.add('active');
-    }
-
-    function closePopup(id) {
-      document.getElementById(id).classList.remove('active');
-    }
-
-    document.getElementById('btnCreditos').addEventListener('click', function() { openPopup('popupCreditos'); });
-    document.getElementById('btnTutorial').addEventListener('click', function() { openPopup('popupTutorial'); });
-    document.getElementById('btnObra').addEventListener('click', function() { openPopup('popupObra'); });
-
-    document.querySelectorAll('.popup-close').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var targetId = this.getAttribute('data-close');
-        closePopup(targetId);
-      });
-    });
-
-    document.querySelectorAll('.popup-overlay').forEach(function(overlay) {
-      overlay.addEventListener('click', function(e) {
-        if (e.target === this) {
-          this.classList.remove('active');
-        }
-      });
-    });
 
     btnSeguir.addEventListener('click', function() { executarAcao('seguir'); });
     btnDescansar.addEventListener('click', function() { executarAcao('descansar'); });
