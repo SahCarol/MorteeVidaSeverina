@@ -32,7 +32,8 @@
     mensagemAtual: '',
     historico: ['🌱 começo'],
     jogoAtivo: true,
-    acaoRealizada: false
+    acaoRealizada: false,
+    acaoUtilizada: null // NOVO: armazena qual ação foi usada
   };
 
   var vidaSpan = document.getElementById('vidaDisplay');
@@ -208,9 +209,12 @@
     }
   };
 
+  // ========== FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO ==========
   function atualizarUI() {
+    // Atualiza vida
     vidaSpan.textContent = estado.vida;
     
+    // Atualiza localização
     var etapaAtual = etapas[estado.etapa];
     if (etapaAtual) {
       iconeLocal.textContent = etapaAtual.icone;
@@ -218,11 +222,14 @@
       destaqueLocal.textContent = (estado.etapa + 1) + '/8';
     }
 
+    // Atualiza histórico
     var ultimos = estado.historico.slice(-6);
     historicoDiv.innerHTML = ultimos.map(function(t) {
       return '<span>' + t + '</span>';
     }).join('');
 
+    // ========== CONTROLE DE BOTÕES ==========
+    // Caso 1: Jogo acabou (morte ou vitória)
     if (!estado.jogoAtivo) {
       if (estado.vida <= 0) {
         mensagemDiv.innerHTML = 
@@ -238,9 +245,13 @@
       btnSeguir.disabled = true;
       btnDescansar.disabled = true;
       btnConversar.disabled = true;
+      btnSeguir.classList.remove('btn-realizado');
+      btnDescansar.classList.remove('btn-realizado');
+      btnConversar.classList.remove('btn-realizado');
       return;
     }
 
+    // Caso 2: Chegou ao Recife (etapa 7)
     if (estado.etapa === 7) {
       mensagemDiv.innerHTML = 
         '<div class="citacao">"A vida Severina venceu."</div>' +
@@ -253,20 +264,24 @@
       return;
     }
 
+    // Caso 3: Jogo ativo - gerencia os botões
+    // SEGUIR sempre habilitado (a menos que tenha morrido)
+    btnSeguir.disabled = false;
+    
+    // Se já realizou uma ação nesta etapa, DESABILITA DESCANSAR e CONVERSAR
     if (estado.acaoRealizada) {
       btnDescansar.disabled = true;
       btnConversar.disabled = true;
-      btnSeguir.disabled = false;
       btnDescansar.classList.add('btn-realizado');
       btnConversar.classList.add('btn-realizado');
     } else {
-      btnSeguir.disabled = false;
       btnDescansar.disabled = false;
       btnConversar.disabled = false;
       btnDescansar.classList.remove('btn-realizado');
       btnConversar.classList.remove('btn-realizado');
     }
 
+    // Mensagem
     if (estado.mensagemAtual) {
       mensagemDiv.innerHTML = estado.mensagemAtual;
     } else {
@@ -301,7 +316,9 @@
     return html;
   }
 
+  // ========== EXECUTAR AÇÃO ==========
   function executarAcao(tipo) {
+    // Verifica se o jogo está ativo
     if (!estado.jogoAtivo || estado.vida <= 0) {
       if (estado.vida <= 0) estado.jogoAtivo = false;
       atualizarUI();
@@ -310,14 +327,17 @@
 
     var etapaAtual = estado.etapa;
     
+    // Se já está no Recife, não faz nada
     if (etapaAtual === 7) {
       return;
     }
 
+    // BLOQUEIA: Se não for SEGUIR e já tiver feito uma ação
     if (tipo !== 'seguir' && estado.acaoRealizada) {
       return;
     }
 
+    // Pega os dados da mensagem
     var dados = mensagens[etapaAtual]?.[tipo];
     if (!dados) {
       dados = {
@@ -330,19 +350,27 @@
     var efeito = efeitos[etapaAtual]?.[tipo] || 0;
     var novaEtapa = etapaAtual;
 
+    // ========== LÓGICA PRINCIPAL ==========
     if (tipo === 'seguir') {
+      // SEGUIR: avança para a próxima etapa
       if (etapaAtual < 7) {
         novaEtapa = etapaAtual + 1;
       }
       addHistorico('Seguir: ' + (etapas[novaEtapa]?.nome || 'próxima etapa'));
+      
+      // RESETA o flag de ação realizada AO AVANÇAR
       estado.acaoRealizada = false;
+      
     } else {
+      // DESCANSAR ou CONVERSAR: marca que a ação foi realizada
       estado.acaoRealizada = true;
       addHistorico(tipo.charAt(0).toUpperCase() + tipo.slice(1) + ' em ' + (etapas[etapaAtual]?.nome || ''));
     }
 
+    // Aplica o efeito na vida
     estado.vida = Math.min(10, Math.max(0, estado.vida + efeito));
 
+    // Verifica se morreu
     if (estado.vida <= 0) {
       estado.jogoAtivo = false;
       estado.mensagemAtual = 
@@ -353,9 +381,11 @@
       return;
     }
 
+    // Se for SEGUIR, atualiza a etapa
     if (tipo === 'seguir') {
       estado.etapa = Math.min(7, novaEtapa);
       
+      // Se chegou ao Recife (etapa 7), finaliza com vitória
       if (estado.etapa === 7) {
         estado.jogoAtivo = false;
         var dadosVitoria = mensagens[7].seguir;
@@ -365,6 +395,7 @@
       }
     }
 
+    // Monta a mensagem final
     estado.mensagemAtual = montarMensagem(dados, efeito, tipo);
     atualizarUI();
   }
@@ -379,18 +410,32 @@
       '<div class="citacao">"O meu nome é Severino, como não tenho outro de pia."</div>' +
       '<div class="descricao">E começa a caminhada pelo sertão. O sol é grande, a esperança é maior. Severino parte em busca de uma vida melhor.</div>' +
       '<div class="sentimento">🌅 Severino sente a aventura começar.</div>';
-    atualizarUI();
+    
+    // Reseta todos os botões
     btnSeguir.disabled = false;
     btnDescansar.disabled = false;
     btnConversar.disabled = false;
     btnDescansar.classList.remove('btn-realizado');
     btnConversar.classList.remove('btn-realizado');
+    
+    atualizarUI();
   }
 
-  btnSeguir.addEventListener('click', function() { executarAcao('seguir'); });
-  btnDescansar.addEventListener('click', function() { executarAcao('descansar'); });
-  btnConversar.addEventListener('click', function() { executarAcao('conversar'); });
+  // ========== EVENTOS ==========
+  btnSeguir.addEventListener('click', function() { 
+    executarAcao('seguir'); 
+  });
+  
+  btnDescansar.addEventListener('click', function() { 
+    executarAcao('descansar'); 
+  });
+  
+  btnConversar.addEventListener('click', function() { 
+    executarAcao('conversar'); 
+  });
+  
   btnReiniciar.addEventListener('click', reiniciarJogo);
 
+  // Inicia o jogo
   reiniciarJogo();
 })();
